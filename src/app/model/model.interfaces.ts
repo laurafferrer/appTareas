@@ -41,6 +41,46 @@ export interface IEntity {
 }
 
 export interface IUsuario extends IEntity {
-    name: string,
     username: string,
+    nombre: string,
+    apellidos: string,
+    puesto: boolean,
+    password: string,
+    proyectos: number,
+    tareas: number
+}
+
+export interface IUsuarioPage extends IPage<IUsuario> {
+}
+
+export interface IProyecto extends IEntity {
+    nombre: string,
+    fecha_inicio: Date,
+    fecha_fin: Date
+}
+
+export interface IProyectoPage extends IPage<IProyecto>{
+}
+
+export interface ITarea extends IEntity {
+    nombre: string,
+    proyecto: IProyecto,
+    usuario: IUsuario
+}
+
+export interface ITareaPage extends IPage<ITarea>{
+}
+
+export type formOperation = 'EDIT' | 'NEW';
+
+export interface SessionEvent {
+    type: string;
+}
+
+export interface IToken {
+    jti: string;
+    iss: string;
+    iat: number;
+    exp: number;
+    name: string;
 }

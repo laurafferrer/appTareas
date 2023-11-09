@@ -35,9 +35,9 @@ export class UsuarioAjaxService {
     return this.oHttpClient.post<IUsuario>(this.sUrl, oUsuario);
   }
 
-  updateOne(oUsuario: IUsuario): Observable<number> {
+  updateOne(oUsuario: IUsuario): Observable<IUsuario> {
     return this.oHttpClient.put<IUsuario>(this.sUrl, oUsuario);
-  }
+}
 
   generateRandom(amount: number): Observable<number> {
     return this.oHttpClient.post<number>(this.sUrl + "/populate/" + amount, null);
