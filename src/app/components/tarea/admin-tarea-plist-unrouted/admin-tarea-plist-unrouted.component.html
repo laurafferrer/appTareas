@@ -1,0 +1,80 @@
+<div *ngIf="status!=null">
+  <div class="d-flex justify-content-center my-3">
+    <div class="alert alert-danger" role="alert">
+      {{status!.error.message}} - {{status!.message}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="status==null">
+  <div class="d-flex justify-content-between mb-3">
+    <h3 *ngIf="id_proyecto>0">Filtered by proyecto ({{id_proyecto}} - {{oProyecto?.nombre | trimming}}) <a type="button"
+        class="btn btn-danger btn-sm" *ngIf="id_proyecto>0" [routerLink]="['/admin','tarea','plist']">reset filter</a>
+    </h3>
+    <h3 *ngIf="id_usuario>0">Filtered by usuario ({{id_usuario}} - {{oUsuario?.nombre}} {{oUsuario?.apellidos}}) <a type="button"
+        class="btn btn-danger btn-sm" *ngIf="id_usuario>0" [routerLink]="['/admin','tarea','plist']">reset filter</a></h3>
+    <h3 *ngIf="!(id_usuario>0)&&!(id_proyecto>0)">No active filter</h3>
+    <h3>Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} replies</h3>
+  </div>
+  <div class="flex justify-content-center mb-3">
+    <p-paginator (onPageChange)="onPageChang($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
+      [totalRecords]="oPage?.totalElements || 0" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+  </div>
+
+
+  <div class="mb-5 ">
+    <table class="table table-bordered table-striped table-hover table-sm">
+      <thead>
+        <tr>
+          <th (click)="doOrder('id')">ID</th>
+          <th (click)="doOrder('nombre')">Nombre</th>
+          <th (click)="doOrder('usuario')">Usuario</th>
+          <th (click)="doOrder('proyecto')">Proyecto</th>
+          <th>Tools</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of oPage?.content" class="align-middle">
+          <td class="text-end"><strong>{{r.id}}</strong></td>
+          <td>{{r.nombre| trimming:25}}</td>
+          <td>
+            <a [routerLink]="['/admin','tarea','plist','byusuario',r.usuario.id]">({{r.usuario.id}}) {{r.usuario.nombre}}
+              {{r.usuario.apellidos}}</a>
+          </td>
+          <td>
+            <a [routerLink]="['/admin','tarea','plist','byproyecto',r.proyecto.id]">({{r.proyecto.id}})
+              {{r.proyecto.nombre}}
+            </a>
+          </td>
+          <td class="text-center">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+              <button class="btn btn-primary" [routerLink]="['/admin','tarea','view',r.id]"><i
+                  class="pi pi-eye"></i></button>
+              <button class="btn btn-primary" (click)="doView(r)"><i class="pi pi-arrow-circle-up"></i></button>
+              <button class="btn btn-warning" [routerLink]="['/admin','tarea','edit',r.id]"><i
+                  class="pi pi-pencil"></i></button>
+              <button class="btn btn-danger" (click)="doRemove(r)"><i class="pi pi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<p-confirmDialog #cd [style]="{ width: '30vw' }">
+  <ng-template pTemplate="header">
+    <h5><i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem"></i> Tarea removal</h5>
+  </ng-template>
+  <ng-template pTemplate="message">
+    <div class="container d-flex align-items-center justify-content-center">
+      <app-admin-tarea-detail-unrouted [id]="oTareaToRemove!.id"></app-admin-tarea-detail-unrouted>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p>¿Are you sure to remove tarea?</p>
+    <button class="btn btn-primary mx-1" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    <button class="btn btn-danger mx-1" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

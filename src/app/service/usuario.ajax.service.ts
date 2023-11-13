@@ -17,6 +17,10 @@ export class UsuarioAjaxService {
     return this.oHttpClient.get<IUsuario>(this.sUrl + "/" + id);
   }
 
+  getByUsername(username: string): Observable<IUsuario> {
+    return this.oHttpClient.get<IUsuario>(this.sUrl + "/byUsername/" + username);
+  }
+
   getPage(size: number | undefined, page: number | undefined, orderField: string, orderDirection: string): Observable<IUsuarioPage> {
     if (!size) size = 10;
     if (!page) page = 0;

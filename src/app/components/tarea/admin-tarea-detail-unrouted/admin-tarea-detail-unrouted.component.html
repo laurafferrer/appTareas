@@ -1,0 +1,35 @@
+<div *ngIf="status!=null">
+  <div class="d-flex justify-content-center my-3">
+      <div class="alert alert-danger" role="alert">
+          {{status!.error.message}} - {{status!.message}}
+      </div>
+  </div>
+</div>
+
+<div *ngIf="status==null">
+  <table class="table table-striped table-hover">
+      <tbody>
+          <tr>
+              <th>Property</th>
+              <th>Value</th>
+          </tr>
+          <tr>
+              <th>id</th>
+              <td>{{oTarea.id}}</td>
+          </tr>
+          <tr>
+              <th>nombre</th>
+              <td>{{oTarea.nombre}}</td>
+          </tr>
+          <tr>
+              <th>usuario</th>
+              <td> <a [routerLink]="['/admin','usuario','view',oTarea.usuario.id]">{{oTarea.usuario.nombre}}
+                      {{oTarea.usuario.apellidos}}</a></td>
+          </tr>
+          <tr>
+              <th>proyecto</th>
+              <td> <a [routerLink]="['/admin','proyecto','view',oTarea.proyecto.id]">{{oTarea.proyecto.nombre}}</a> </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

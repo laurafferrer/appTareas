@@ -17,14 +17,10 @@ export class ProyectoAjaxService {
     return this.oHttpCliente.get<IProyecto>(this.sUrl + "/" + id);
   }
 
-  getPage(size: number | undefined, page: number | undefined, orderField: string, orderDirection: string, id_usuario: number): Observable<IProyectoPage> {
+  getPage(size: number | undefined, page: number | undefined, orderField: string, orderDirection: string): Observable<IProyectoPage> {
     if (!size) size = 10;
     if (!page) page = 0;
-    let strUrlUsuario = "";
-    if (id_usuario > 0) {
-      strUrlUsuario = "&usuario=" + id_usuario;
-    }
-    return this.oHttpCliente.get<IProyectoPage>(this.sUrl + "?size=" + size + "&page=" + page + "&sort=" + orderField + "," + orderDirection + strUrlUsuario);
+    return this.oHttpCliente.get<IProyectoPage>(this.sUrl + "?size=" + size + "&page=" + page + "&sort=" + orderField + "," + orderDirection);
   }
 
   removeOne(id: number | undefined): Observable<number> {

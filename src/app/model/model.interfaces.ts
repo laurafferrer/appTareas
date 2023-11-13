@@ -41,11 +41,10 @@ export interface IEntity {
 }
 
 export interface IUsuario extends IEntity {
-    username: string,
-    nombre: string,
+    nombew: string,
     apellidos: string,
+    username: string,
     puesto: boolean,
-    password: string,
     proyectos: number,
     tareas: number
 }
@@ -55,20 +54,20 @@ export interface IUsuarioPage extends IPage<IUsuario> {
 
 export interface IProyecto extends IEntity {
     nombre: string,
-    fecha_inicio: Date,
-    fecha_fin: Date
+    fechaInicio: Date,
+    fechaFin: Date
 }
 
-export interface IProyectoPage extends IPage<IProyecto>{
+export interface IProyectoPage extends IPage<IProyecto> {
 }
 
 export interface ITarea extends IEntity {
     nombre: string,
-    proyecto: IProyecto,
-    usuario: IUsuario
+    usuario: IUsuario,
+    proyecto: IProyecto
 }
 
-export interface ITareaPage extends IPage<ITarea>{
+export interface ITareaPage extends IPage<ITarea> {
 }
 
 export type formOperation = 'EDIT' | 'NEW';

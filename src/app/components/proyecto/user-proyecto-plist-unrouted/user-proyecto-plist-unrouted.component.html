@@ -1,0 +1,47 @@
+<div *ngIf="status!=null">
+  <div class="d-flex justify-content-center my-3">
+    <div class="alert alert-danger" role="alert">
+      {{status!.error.message}} - {{status!.message}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="status==null">
+  <div class="d-flex justify-content-between">
+
+    <input type="radio" class="btn-check btn-sm" name="options-outlined" id="success-outlined" autocomplete="off"
+       (change)="onOrderChange($event)" [checked]="activeOrder">
+    <label class="btn btn-outline-success" for="success-outlined">new</label>
+
+    <h4>Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} proyectos.</h4>
+
+    <input type="radio" class="btn-check btn-sm" name="options-outlined" id="danger-outlined" autocomplete="off"
+       (change)="onOrderChange($event)" [checked]="!activeOrder">
+    <label class="btn btn-outline-danger" for="danger-outlined">popular</label>
+
+  </div>
+
+  <div class="flex justify-content-center m-1">
+    <p-paginator (onPageChange)="onPageChang($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
+      [totalRecords]="oPage?.totalElements || 0" [rowsPerPageOptions]="" [showPageLinks]="false"></p-paginator>
+  </div>
+
+  <div class=" d-flex">
+    <ul class="list-group">
+
+      <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let t of oPage?.content"
+        (click)="doShowReplies(t)" [ngClass]="{active: t.id==activeProyecto?.id}">
+
+        <div class="ms-2 me-auto">
+          <a href="">{{t.nombre}}</a>
+        </div>
+        <div class="ms-1">
+          <span class="badge bg-light">
+            <span class="badge bg-secondary rounded-pill">{{t.tareas}}</span>
+          </span>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
