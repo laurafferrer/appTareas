@@ -37,10 +37,20 @@ export class UsuarioAjaxService {
 
   updateOne(oUsuario: IUsuario): Observable<IUsuario> {
     return this.oHttpClient.put<IUsuario>(this.sUrl, oUsuario);
-}
+  }
 
   generateRandom(amount: number): Observable<number> {
     return this.oHttpClient.post<number>(this.sUrl + "/populate/" + amount, null);
+  }
+
+  getpageByTareasNumberDesc(size: number | undefined, page: number | undefined): Observable<IUsuarioPage> {
+    if (!size) size = 10;
+    if (!page) page = 0;
+    return this.oHttpClient.get<IUsuarioPage>(this.sUrl + "/byTareasNumberDesc?size=" + size + "&page=" + page);
+  }
+
+  empty(): Observable<number> {
+    return this.oHttpClient.delete<number>(this.sUrl + "/empty");
   }
 
 }
