@@ -12,13 +12,13 @@
                     <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/usuario/plist" *ngIf="strUserName && oSessionUsuario?.role==false">Usuarios</a>
+                    <a class="nav-link" routerLink="/admin/usuario/plist" *ngIf="strUserName && oSessionUsuario?.puesto==false">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/thread/plist" *ngIf="strUserName && oSessionUsuario?.role==false">Threads</a>
+                    <a class="nav-link" routerLink="/admin/proyecto/plist" *ngIf="strUserName && oSessionUsuario?.puesto==false">Proyectos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin/reply/plist" *ngIf="strUserName && oSessionUsuario?.role==false">Replies</a>
+                    <a class="nav-link" routerLink="/admin/tarea/plist" *ngIf="strUserName && oSessionUsuario?.puesto==false">Tareas</a>
                 </li>
 
             </ul>

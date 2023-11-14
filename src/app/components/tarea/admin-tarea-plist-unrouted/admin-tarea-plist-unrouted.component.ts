@@ -4,7 +4,7 @@ import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginatorState } from 'primeng/paginator';
 import { ITarea, ITareaPage, IProyecto, IUsuario } from 'src/app/model/model.interfaces';
-import { AdminTareaDetailRoutedComponent } from '../admin-tarea-detail-unrouted/admin-tarea-detail-unrouted.component';
+import { AdminTareaDetailUnroutedComponent } from '../admin-tarea-detail-unrouted/admin-tarea-detail-unrouted.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
 import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
@@ -90,7 +90,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
 
   doView(u: ITarea) {
-    this.ref = this.oDialogService.open(AdminTareaDetailRoutedComponent, {
+    this.ref = this.oDialogService.open(AdminTareaDetailUnroutedComponent, {
       data: {
         id: u.id
       },

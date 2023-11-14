@@ -40,10 +40,10 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
     this.tareaForm = this.formBuilder.group({
       id: [oTarea.id],
       title: [oTarea.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      user: this.formBuilder.group({
+      usuario: this.formBuilder.group({
         id: [oTarea.usuario.id, Validators.required]
       }),
-      thread: this.formBuilder.group({
+      proyecto: this.formBuilder.group({
         id: [oTarea.proyecto.id, Validators.required]
       })
     });
@@ -51,7 +51,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
 
   ngOnInit() {
     if (this.operation == 'EDIT') {
-      this.oTarea.getOne(this.id).subscribe({
+      this.oTareaAjaxService.getOne(this.id).subscribe({
         next: (data: ITarea) => {
           this.oTarea = data;
           this.initializeForm(this.oTarea);
@@ -104,7 +104,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
 
   onShowUsuariosSelection() {
     this.oDynamicDialogRef = this.oDialogService.open(AdminUsuarioSelectionUnroutedComponent, {
-      header: 'Select a usuario',
+      header: 'Select a Usuario',
       width: '80%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
