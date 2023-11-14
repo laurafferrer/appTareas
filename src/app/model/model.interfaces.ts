@@ -41,7 +41,7 @@ export interface IEntity {
 }
 
 export interface IUsuario extends IEntity {
-    nombew: string,
+    nombre: string,
     apellidos: string,
     username: string,
     puesto: boolean,

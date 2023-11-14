@@ -1,0 +1,59 @@
+<div *ngIf="status!=null">
+  <div class="d-flex justify-content-center my-3">
+    <div class="alert alert-danger" role="alert">
+      {{status!.error.message}} - {{status!.message}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="status==null">
+  <div class="d-flex justify-content-end mb-3">
+    <h6>Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} usuarios.</h6>
+  </div>
+  <div class="flex justify-content-center mb-3">
+    <p-paginator (onPageChange)="onPageChang($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
+      [totalRecords]="oPage?.totalElements || 0" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+  </div>
+
+
+  <div class="mb-5 ">
+    <table class="table table-bordered table-striped table-hover table-sm">
+      <thead>
+        <tr>
+          <th (click)="doOrder('id')">ID</th>
+          <th (click)="doOrder('nombre')">Nombre</th>
+          <th (click)="doOrder('apellidos')">Apellidos</th>
+          <th (click)="doOrder('username')">Username</th>
+          <th (click)="doOrder('puesto')">Puesto</th>
+          <th>Proyectos</th>
+          <th>Tareas</th>
+          <th>Tools</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of oPage?.content" class="align-middle">
+          <td class="text-end"><strong>{{u.id}}</strong></td>
+          <td>{{u.nombre}}</td>
+          <td>{{u.apellidos}}</td>
+          <td>{{u.username}}</td>
+          <td class="text-center">
+            <span *ngIf="u.puesto==true">Admin</span>
+            <span *ngIf="u.puesto==false">User</span>
+          </td>
+          <td class="text-center">
+            {{u.proyectos}}
+          </td>
+          <td class="text-center">
+            {{u.tareas}}
+          </td>
+          <td class="text-center">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+              <button class="btn btn-primary" (click)="onSelectUsuario(u)"><i
+                  class="pi pi-plus-circle"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

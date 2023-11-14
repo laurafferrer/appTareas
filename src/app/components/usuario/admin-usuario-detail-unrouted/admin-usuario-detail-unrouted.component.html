@@ -1,0 +1,57 @@
+<div *ngIf="status!=null">
+  <div class="d-flex justify-content-center my-3">
+      <div class="alert alert-danger" role="alert">
+          {{status!.error.message}} - {{status!.message}}
+      </div>
+  </div>
+</div>
+
+<div *ngIf="status==null">
+  <table class="table table-striped table-hover">
+      <tbody>
+          <tr>
+              <th>Property</th>
+              <th>Value</th>
+          </tr>
+          <tr>
+              <th>id</th>
+              <td>{{oUsuario.id}}</td>
+          </tr>
+          <tr>
+              <th>nombre</th>
+              <td>{{oUsuario.nombre}}</td>
+          </tr>
+          <tr>
+              <th>apellidos</th>
+              <td>{{oUsuario.apellidos}}</td>
+          </tr>
+          <tr>
+              <th>username</th>
+              <td>{{oUsuario.username}}</td>
+          </tr>
+          <tr>
+              <th>puesto</th>
+              <td>
+                  <span *ngIf="oUsuario.puesto==true">Admin</span>
+                  <span *ngIf="oUsuario.puesto==false">User</span>
+              </td>
+          </tr>
+          <tr>
+              <th>proyectos</th>
+              <td>
+                  <a [routerLink]="['/admin','proyecto','plist','byuser',oUsuario.id]"
+                      *ngIf="oUsuario.proyectos>0">{{oUsuario.proyectos}}</a>
+                  <span *ngIf="oUsuario.proyectos==0">0</span>
+              </td>
+          </tr>
+          <tr>
+              <th>tareas</th>
+              <td>
+                  <a [routerLink]="['/admin','tarea','plist','byuser',oUsuario.id]"
+                      *ngIf="oUsuario.tareas>0">{{oUsuario.tareas}}</a>
+                  <span *ngIf="oUsuario.tareas==0">0</span>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

@@ -34,7 +34,7 @@ import { LogoutRoutedComponent } from './components/shared/logout-routed/logout-
 import { FooterUnroutedComponent } from './components/shared/footer-unrouted/footer-unrouted.component';
 import { LoginRoutedComponent } from './components/shared/login-routed/login-routed.component';
 //--
-/*import { AdminUsuarioPlistRoutedComponent } from './components/usuario/admin-usuario-plist-routed/admin-usuario-plist-routed.component';
+import { AdminUsuarioPlistRoutedComponent } from './components/usuario/admin-usuario-plist-routed/admin-usuario-plist-routed.component';
 import { AdminUsuarioViewRoutedComponent } from './components/usuario/admin-usuario-view-routed/admin-usuario-view-routed.component';
 import { AdminUsuarioNewRoutedComponent } from './components/usuario/admin-usuario-new-routed/admin-usuario-new-routed.component';
 import { AdminUsuarioEditRoutedComponent } from './components/usuario/admin-usuario-edit-routed/admin-usuario-edit-routed.component';
@@ -42,7 +42,7 @@ import { AdminUsuarioPlistUnroutedComponent } from './components/usuario/admin-u
 import { AdminUsuarioDetailUnroutedComponent } from './components/usuario/admin-usuario-detail-unrouted/admin-usuario-detail-unrouted.component';
 import { AdminUsuarioFormUnroutedComponent } from './components/usuario/admin-usuario-form-unrouted/admin-usuario-form-unrouted.component';
 import { AdminUsuarioSelectionUnroutedComponent } from './components/usuario/admin-usuario-selection-unrouted/admin-usuario-selection-unrouted.component';
-import { UserUsuarioFeaturedUnroutedComponent } from './components/usuario/user-usuario-featured-unrouted/user-usuario-featured-unrouted.component';*/
+import { UserUsuarioFeaturedUnroutedComponent } from './components/usuario/user-usuario-featured-unrouted/user-usuario-featured-unrouted.component';
 //
 import { AdminProyectoNewRoutedComponent } from './components/proyecto/admin-proyecto-new-routed/admin-proyecto-new-routed.component';
 import { AdminProyectoViewRoutedComponent } from './components/proyecto/admin-proyecto-view-routed/admin-proyecto-view-routed.component';
@@ -75,7 +75,7 @@ import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-
     LoginRoutedComponent,
     LogoutRoutedComponent,
     //--
-   /* AdminUsuarioPlistRoutedComponent,
+    AdminUsuarioPlistRoutedComponent,
     AdminUsuarioViewRoutedComponent,
     AdminUsuarioNewRoutedComponent,
     AdminUsuarioEditRoutedComponent,
@@ -83,7 +83,7 @@ import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-
     AdminUsuarioDetailUnroutedComponent,
     AdminUsuarioFormUnroutedComponent,
     AdminUsuarioSelectionUnroutedComponent,
-    UserUsuarioFeaturedUnroutedComponent,*/
+    UserUsuarioFeaturedUnroutedComponent,
     //--
     AdminProyectoPlistRoutedComponent,
     AdminProyectoViewRoutedComponent,

@@ -47,7 +47,7 @@ export class UsuarioAjaxService {
     return this.oHttpClient.post<number>(this.sUrl + "/populate/" + amount, null);
   }
 
-  getpageByTareasNumberDesc(size: number | undefined, page: number | undefined): Observable<IUsuarioPage> {
+  getPageByTareasNumberDesc(size: number | undefined, page: number | undefined): Observable<IUsuarioPage> {
     if (!size) size = 10;
     if (!page) page = 0;
     return this.oHttpClient.get<IUsuarioPage>(this.sUrl + "/byTareasNumberDesc?size=" + size + "&page=" + page);
