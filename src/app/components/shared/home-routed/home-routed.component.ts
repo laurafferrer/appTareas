@@ -12,7 +12,7 @@ import { IProyecto } from 'src/app/model/model.interfaces';
 
 export class HomeRoutedComponent implements OnInit {
 
-  id_proyecto: number = 17;
+  id_proyecto: number = 1;
   
 
   constructor(
