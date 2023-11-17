@@ -95,6 +95,7 @@ import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-
     AdminProyectoSelectionUnroutedComponent,
     UserProyectoFeaturedUnroutedComponent,
     UserProyectoPlistUnroutedComponent,
+    /*UserProyectoFormUnrouteedComponent,*/
     //--
     AdminTareaPlistRoutedComponent,
     AdminTareaViewRoutedComponent,
