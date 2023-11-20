@@ -17,6 +17,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { CalendarModule } from 'primeng/calendar';
+import { TooltipModule } from 'primeng/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 //--
 import { TrimPipe } from './pipes/trim.pipe';
 //--
@@ -43,6 +48,7 @@ import { AdminUsuarioDetailUnroutedComponent } from './components/usuario/admin-
 import { AdminUsuarioFormUnroutedComponent } from './components/usuario/admin-usuario-form-unrouted/admin-usuario-form-unrouted.component';
 import { AdminUsuarioSelectionUnroutedComponent } from './components/usuario/admin-usuario-selection-unrouted/admin-usuario-selection-unrouted.component';
 import { UserUsuarioFeaturedUnroutedComponent } from './components/usuario/user-usuario-featured-unrouted/user-usuario-featured-unrouted.component';
+import { UserUsuarioDetailUnroutedComponent } from './components/usuario/user-usuario-detail-unrouted/user-usuario-detail-unrouted.component';
 //
 import { AdminProyectoNewRoutedComponent } from './components/proyecto/admin-proyecto-new-routed/admin-proyecto-new-routed.component';
 import { AdminProyectoViewRoutedComponent } from './components/proyecto/admin-proyecto-view-routed/admin-proyecto-view-routed.component';
@@ -54,6 +60,7 @@ import { AdminProyectoFormUnroutedComponent } from './components/proyecto/admin-
 import { UserProyectoPlistUnroutedComponent } from './components/proyecto/user-proyecto-plist-unrouted/user-proyecto-plist-unrouted.component';
 import { AdminProyectoSelectionUnroutedComponent } from './components/proyecto/admin-proyecto-selection-unrouted/admin-proyecto-selection-unrouted.component';
 import { UserProyectoFeaturedUnroutedComponent } from './components/proyecto/user-proyecto-featured-unrouted/user-proyecto-featured-unrouted.component';
+import { UserProyectoFormUnroutedComponent } from './components/proyecto/user-proyecto-form-unrouted/user-proyecto-form-unrouted.component';
 //
 import { AdminTareaPlistUnroutedComponent } from './components/tarea/admin-tarea-plist-unrouted/admin-tarea-plist-unrouted.component';
 import { AdminTareaDetailUnroutedComponent } from './components/tarea/admin-tarea-detail-unrouted/admin-tarea-detail-unrouted.component';
@@ -64,6 +71,9 @@ import { AdminTareaNewRoutedComponent } from './components/tarea/admin-tarea-new
 import { AdminTareaFormUnroutedComponent } from './components/tarea/admin-tarea-form-unrouted/admin-tarea-form-unrouted.component';
 import { UserTareaPlistUnroutedComponent } from './components/tarea/user-tarea-plist-unrouted/user-tarea-plist-unrouted.component';
 import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-detail-unrouted/user-tarea-detail-unrouted.component';
+import { UserTareaFormUnroutedComponent } from './components/tarea/user-tarea-form-unrouted/user-tarea-form-unrouted.component';
+
+
 //--
 @NgModule({
   declarations: [
@@ -84,6 +94,7 @@ import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-
     AdminUsuarioFormUnroutedComponent,
     AdminUsuarioSelectionUnroutedComponent,
     UserUsuarioFeaturedUnroutedComponent,
+    UserUsuarioDetailUnroutedComponent,
     //--
     AdminProyectoPlistRoutedComponent,
     AdminProyectoViewRoutedComponent,
@@ -95,7 +106,7 @@ import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-
     AdminProyectoSelectionUnroutedComponent,
     UserProyectoFeaturedUnroutedComponent,
     UserProyectoPlistUnroutedComponent,
-    /*UserProyectoFormUnrouteedComponent,*/
+    UserProyectoFormUnroutedComponent,
     //--
     AdminTareaPlistRoutedComponent,
     AdminTareaViewRoutedComponent,
@@ -106,6 +117,7 @@ import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-
     AdminTareaFormUnroutedComponent,
     UserTareaPlistUnroutedComponent,
     UserTareaDetailUnroutedComponent,
+    UserTareaFormUnroutedComponent,
     //--    
   ],
   imports: [
@@ -122,12 +134,17 @@ import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-
     PaginatorModule,
     TableModule,
     ConfirmDialogModule,
+    ConfirmPopupModule,
+    CalendarModule,
+    TooltipModule,
     //--
     MatButtonModule,
     MatCardModule,
     MatInputModule,
     MatRadioModule,
     MatFormFieldModule,
+    MatToolbarModule,
+    MatIconModule,
     //--
   ],
   providers: [
