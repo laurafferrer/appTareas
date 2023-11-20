@@ -6,12 +6,11 @@
   </div>
 </div>
 
-
 <div *ngIf="status==null">
   <div class=" d-flex">
     <ol>
       <li *ngFor="let u of oPage?.content">
-        {{u.username}}: {{u.tareas}} tareas
+        {{u.username}}: {{u.tareas}} replies
       </li>
     </ol>
   </div>

@@ -40,7 +40,7 @@ export class UserProyectoPlistUnroutedComponent implements OnInit {
     if (this.activeOrder) {
       this.getPage();
     } else {
-      this.getPageByRepliesNumberDesc();
+      this.getPageByTareasNumberDesc();
     }
   }
 
@@ -66,11 +66,11 @@ export class UserProyectoPlistUnroutedComponent implements OnInit {
     if (this.activeOrder) {
       this.getPage();
     } else {
-      this.getPageByRepliesNumberDesc();
+      this.getPageByTareasNumberDesc();
     }
   }
 
-  doShowReplies(oProyecto: IProyecto) {
+  doShowTareas(oProyecto: IProyecto) {
     this.proyecto_selection.emit(oProyecto);
     this.activeProyecto = oProyecto;
     return false;
@@ -82,11 +82,11 @@ export class UserProyectoPlistUnroutedComponent implements OnInit {
     if (this.activeOrder) {
       this.getPage();
     } else {
-      this.getPageByRepliesNumberDesc();
+      this.getPageByTareasNumberDesc();
     }
   }
 
-  getPageByRepliesNumberDesc(): void {
+  getPageByTareasNumberDesc(): void {
     this.oProyectoAjaxService.getPageByTareasNumberDesc(this.oPaginatorState.rows, this.oPaginatorState.page, 0).subscribe({
       next: (data: IProyectoPage) => {
         this.oPage = data;
