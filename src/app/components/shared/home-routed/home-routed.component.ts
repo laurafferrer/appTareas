@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { IProyecto } from 'src/app/model/model.interfaces';
-
-
 
 
 @Component({
@@ -12,23 +11,19 @@ import { IProyecto } from 'src/app/model/model.interfaces';
 
 export class HomeRoutedComponent implements OnInit {
 
-  id_proyecto: number = 1;
-  
+  proyecto_id: number = 0;
+  reloadTareas: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   onProyectoChange(oProyecto: IProyecto) {
-    this.id_proyecto = oProyecto.id;
+    this.proyecto_id = oProyecto.id;
   }
 
+  onTareaChange(bTarea: Boolean) {
+    this.reloadTareas.next(true);
+  }
 }
-
-
-
-
-

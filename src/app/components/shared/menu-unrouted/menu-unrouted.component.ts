@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IUsuario, SessionEvent } from 'src/app/model/model.interfaces';
 import { SessionAjaxService } from 'src/app/service/session.ajax.service';
 import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
+import { UserUsuarioDetailUnroutedComponent } from '../../usuario/user-usuario-detail-unrouted/user-usuario-detail-unrouted.component';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-unrouted',
@@ -13,11 +16,21 @@ export class MenuUnroutedComponent implements OnInit {
 
   strUserName: string = "";
   oSessionUsuario: IUsuario | null = null;
+  strUrl: string = "";
 
   constructor(
     private oSessionService: SessionAjaxService,
-    private oUsuarioAjaxService: UsuarioAjaxService
+    public oDialogService: DialogService,
+    private oUsuarioAjaxService: UsuarioAjaxService,
+    private oRouter: Router
   ) {
+    
+    this.oRouter.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) {
+        this.strUrl = ev.url;
+      }
+    })
+    
     this.strUserName = oSessionService.getUsername();
     this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
       next: (oUsuario: IUsuario) => {
@@ -48,9 +61,26 @@ export class MenuUnroutedComponent implements OnInit {
         }
       }
     });
-
-
   }
+
+  doSessionUsuarioView($event: Event) {
+    if (this.oSessionUsuario) {
+      let ref: DynamicDialogRef | undefined;
+      ref = this.oDialogService.open(UserUsuarioDetailUnroutedComponent, {
+        data: {
+          id: this.oSessionUsuario.id
+        },
+        header: 'View of user',
+        width: '50%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: false
+      });
+    }
+    return false;
+    //$event.preventDefault
+  }
+
 }
 
 
