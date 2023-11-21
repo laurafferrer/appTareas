@@ -3,12 +3,13 @@ import { Injectable } from "@angular/core";
 import { SessionAjaxService } from "../service/session.ajax.service";
 import { Observable } from "rxjs";
 
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    
-    constructor (
+
+    constructor(
         private oSessionService: SessionAjaxService
-    ) {}
+    ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
@@ -26,5 +27,6 @@ export class AuthInterceptor implements HttpInterceptor {
         } else {
             return next.handle(req);
         }
+        
     }
 }
