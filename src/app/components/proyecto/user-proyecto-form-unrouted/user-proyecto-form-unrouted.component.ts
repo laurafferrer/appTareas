@@ -18,10 +18,7 @@ export class UserProyectoFormUnroutedComponent implements OnInit {
   @Input() operation: formOperation = 'NEW'; //new or edit
 
   proyectoForm!: FormGroup;
-  oProyecto: IProyecto = {  usuario: { id: 0 } } as IProyecto;
-  status: HttpErrorResponse | null = null;
-
-
+  oProyecto: IProyecto = { fechaInicio: new Date(Date.now()), fechaFin: new Date(Date.now()), usuario: { id: 0 } } as IProyecto;  status: HttpErrorResponse | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,6 +34,8 @@ export class UserProyectoFormUnroutedComponent implements OnInit {
     this.proyectoForm = this.formBuilder.group({
       id: [oProyecto.id],
       nombre: [oProyecto.nombre, [Validators.required, Validators.minLength(10), Validators.maxLength(2048)]],
+      fechaInicio: [new Date(oProyecto.fechaInicio), [Validators.required]],
+      fechaFin: [new Date(oProyecto.fechaFin), [Validators.required]],
       usuario: this.formBuilder.group({
         id: [oProyecto.usuario.id, Validators.required]
       })

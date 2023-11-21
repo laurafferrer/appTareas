@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginatorState } from 'primeng/paginator';
@@ -10,6 +10,8 @@ import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
 import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
 import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 import { SessionAjaxService } from 'src/app/service/session.ajax.service';
+import { UserProyectoFormUnroutedComponent } from '../../proyecto/user-proyecto-form-unrouted/user-proyecto-form-unrouted.component';
+import { UserTareaFormUnroutedComponent } from '../user-tarea-form-unrouted/user-tarea-form-unrouted.component';
 
 
 @Component({
@@ -22,39 +24,41 @@ import { SessionAjaxService } from 'src/app/service/session.ajax.service';
 export class UserTareaPlistUnroutedComponent implements OnInit {
 
   @Input()
-  set id_usuario(value: number) {
+  set usuario_id(value: number) {
     if (value) {
-      this.id_usuario_filter = value;
+      this.usuario_id_filter = value;
     } else {
-      this.id_usuario_filter = 0;
+      this.usuario_id_filter = 0;
     }
     this.getPage();
   }
-  get id_usuario(): number {
-    return this.id_usuario_filter;
+  get usuario_id(): number {
+    return this.usuario_id_filter;
   }
 
   @Input()
-  set id_proyecto(value: number) {
+  set proyecto_id(value: number) {
     if (value) {
-      this.id_proyecto_filter = value;
+      this.proyecto_id_filter = value;
     } else {
-      this.id_proyecto_filter = 0;
+      this.proyecto_id_filter = 0;
     }
     this.getPage();
   }
-  get id_proyecto(): number {
-    return this.id_proyecto_filter;
+  get proyecto_id(): number {
+    return this.proyecto_id_filter;
   }
 
-  id_proyecto_filter: number = 0; //filter by proyecto
-  id_usuario_filter: number = 0; //filter by usuario
+  @Output() tarea_change = new EventEmitter<Boolean>();
+
+  proyecto_id_filter: number = 0; //filter by thread
+  usuario_id_filter: number = 0; //filter by thread
 
   oPage: ITareaPage | undefined;
-  oUsuario: IUsuario | null = null; // data of usuario if id_usuario is set for filter
-  oProyecto: IProyecto | null = null; // data of proyecto if id_proyecto is set for filter
+  oUser: IUsuario | null = null; // data of user if usuario_id is set for filter
+  oThread: IProyecto | null = null; // data of thread if proyecto_id is set for filter
   orderField: string = "id";
-  orderDirection: string = "asc";
+  orderDirection: string = "desc";
   oPaginatorState: PaginatorState = { first: 0, rows: 10, page: 0, pageCount: 0 };
   status: HttpErrorResponse | null = null;
   oTareaToRemove: ITarea | null = null;
@@ -71,16 +75,16 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
 
   ngOnInit() {
     this.getPage();
-    if (this.id_usuario > 0) {
+    if (this.usuario_id > 0) {
       this.getUsuario();
     }
-    if (this.id_proyecto > 0) {
+    if (this.proyecto_id > 0) {
       this.getProyecto();
     }
   }
 
   getPage(): void {
-    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.id_usuario_filter, this.id_proyecto_filter).subscribe({
+    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.usuario_id_filter, this.proyecto_id_filter).subscribe({
       next: (data: ITareaPage) => {
         this.oPage = data;
         this.oPaginatorState.pageCount = data.totalPages;
@@ -97,8 +101,6 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
     this.oPaginatorState.page = event.page;
     this.getPage();
   }
-
-  
 
   ref: DynamicDialogRef | undefined;
 
@@ -123,6 +125,7 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
         this.oTareaAjaxService.removeOne(this.oTareaToRemove?.id).subscribe({
           next: () => {
             this.getPage();
+            this.tarea_change.emit(true);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
@@ -137,9 +140,9 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
   }
 
   getUsuario(): void {
-    this.oUsuarioAjaxService.getOne(this.id_usuario).subscribe({
+    this.oUsuarioAjaxService.getOne(this.usuario_id).subscribe({
       next: (data: IUsuario) => {
-        this.oUsuario = data;
+        this.oUser = data;
       },
       error: (error: HttpErrorResponse) => {
         this.status = error;
@@ -149,9 +152,9 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
   }
 
   getProyecto(): void {
-    this.oProyectoAjaxService.getOne(this.id_proyecto).subscribe({
+    this.oProyectoAjaxService.getOne(this.proyecto_id).subscribe({
       next: (data: IProyecto) => {
-        this.oProyecto = data;
+        this.oThread = data;
       },
       error: (error: HttpErrorResponse) => {
         this.status = error;
@@ -160,5 +163,47 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
     })
   }
 
+  postNewTarea(): void {
+    if (this.proyecto_id_filter > 0 && this.oSessionService.isSessionActive()) {
 
+      this.ref = this.oDialogService.open(UserTareaFormUnroutedComponent, {
+        data: {
+          proyecto_id: this.proyecto_id_filter,
+        },
+        header: 'Post a new tarea',
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: false
+      });
+
+      this.ref.onClose.subscribe((nTarea: number) => {
+        this.getPage();
+        this.tarea_change.emit(true);
+      });
+    }
+  }
+
+
+
+  postNewProyecto(): void {
+    if (this.proyecto_id_filter > 0 && this.oSessionService.isSessionActive()) {
+
+      this.ref = this.oDialogService.open(UserProyectoFormUnroutedComponent, {
+        data: {
+          proyecto_id: this.proyecto_id_filter,
+        },
+        header: 'Post a new proyecto',
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: false
+      });
+
+      this.ref.onClose.subscribe((nThread: number) => {
+        this.getPage();
+        this.tarea_change.emit(true);
+      });
+    }
+  }
 }

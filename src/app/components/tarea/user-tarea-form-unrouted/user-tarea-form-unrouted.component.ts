@@ -15,7 +15,7 @@ import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
 export class UserTareaFormUnroutedComponent implements OnInit {
 
   replyForm!: FormGroup;
-  oTarea: ITarea = { creation: new Date(Date.now()), usuario: { id: 0 }, proyecto: { id: 0 } } as ITarea;
+  oTarea: ITarea = { "usuario": { id: 0 }, "proyecto": { id: 0 } } as ITarea;
   status: HttpErrorResponse | null = null;
   //---
   id: number = 0;
@@ -118,6 +118,5 @@ export class UserTareaFormUnroutedComponent implements OnInit {
       }
     }
   }
-
 
 }

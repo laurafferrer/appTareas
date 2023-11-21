@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IProyecto, IUsuario, formOperation } from 'src/app/model/model.interfaces';
 import { AdminUsuarioSelectionUnroutedComponent } from '../../usuario/admin-usuario-selection-unrouted/admin-usuario-selection-unrouted.component';
 import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
+import { CALENDAR_ES } from 'src/environment/environment';
 
 @Component({
   selector: 'app-admin-proyecto-form-unrouted',
@@ -16,10 +17,12 @@ import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 
 export class AdminProyectoFormUnroutedComponent implements OnInit {
   @Input() id: number = 1;
-  @Input() operation: formOperation = 'NEW'; //new or edit
+  @Input() operation: formOperation = 'NEW';
+
+  es = CALENDAR_ES;
 
   proyectoForm!: FormGroup;
-  oProyecto: IProyecto = { usuario: {} } as IProyecto;
+  oProyecto: IProyecto = { fechaInicio: new Date(Date.now()), fechaFin: new Date(Date.now()), usuario: {} } as IProyecto;
   status: HttpErrorResponse | null = null;
 
   oDynamicDialogRef: DynamicDialogRef | undefined;
@@ -38,6 +41,8 @@ export class AdminProyectoFormUnroutedComponent implements OnInit {
     this.proyectoForm = this.formBuilder.group({
       id: [oProyecto.id],
       nombre: [oProyecto.nombre, [Validators.required, Validators.minLength(1), Validators.maxLength(2048)]],
+      fechaInicio: [new Date(oProyecto.fechaInicio), [Validators.required]],
+      fechaFin: [new Date(oProyecto.fechaFin), [Validators.required]],
       usuario: this.formBuilder.group({
         id: [oProyecto.usuario.id, Validators.required]
       })

@@ -5,8 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 interface ITarea {
   id:number;
   nombre:string;
-  id_usuario:number;
-  id_proyecto:number;
+  usuario_id:number;
+  proyecto_id:number;
 }
 
 @Component({

@@ -12,23 +12,15 @@
       <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <mat-form-field>
-            <mat-label>Título:</mat-label>
-            <input matInput formControlName="title" placeholder="Título" required>
+            <mat-label>Nombre:</mat-label>
+            <input matInput formControlName="nombre" placeholder="Nombre" required>
             <mat-hint align="end">(3 to 255 characters long)</mat-hint>
-            <mat-error *ngIf="hasError('title', 'required')">El título es requerido</mat-error>
-            <mat-error *ngIf="hasError('title', 'minlength')">Se requiere más longitud</mat-error>
-            <mat-error *ngIf="hasError('title', 'maxlength')">Excede el límite</mat-error>
+            <mat-error *ngIf="hasError('nombre', 'required')">Nombre is required</mat-error>
+            <mat-error *ngIf="hasError('nombre', 'minlength')">Must be longer</mat-error>
+            <mat-error *ngIf="hasError('nombre', 'maxlength')">Exceeds characters limit</mat-error>
           </mat-form-field>
         </div>
-        <div class="form-group">
-          <mat-form-field [style.width.px]=500>
-            <mat-label>Cuerpo:</mat-label>
-            <textarea matInput formControlName="body" placeholder="Cuerpo" required></textarea>
-            <mat-hint align="end">(Máximo 1000 caracteres)</mat-hint>
-            <mat-error *ngIf="hasError('body', 'required')">El cuerpo es requerido</mat-error>
-            <mat-error *ngIf="hasError('body', 'maxlength')">Excede el límite de caracteres</mat-error>
-          </mat-form-field>
-        </div>
+
         <div formGroupName="usuario">
           <div class="form-group">
             <mat-form-field [style.width.px]=100>
@@ -46,14 +38,15 @@
               <mat-label>PROYECTO:</mat-label>
               <input matInput formControlName="id" placeholder="PROYECTO" required readonly>
             </mat-form-field>
-            <button class="btn btn-primary" type="button" (click)="onShowProyectosSelection()"> <i class="pi pi-search"></i>
+            <button class="btn btn-primary" type="button" (click)="onShowProyectosSelection()"> <i
+                class="pi pi-search"></i>
               Find a proyecto</button>
             {{oTarea.proyecto.nombre}}
           </div>
         </div>
 
         <div class="text-center mt-5">
-          <button mat-raised-button color="primary" type="submit" [disabled]="!tareaForm.valid">Save Proyecto</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!tareaForm.valid">Save tarea</button>
         </div>
       </form>
     </div>

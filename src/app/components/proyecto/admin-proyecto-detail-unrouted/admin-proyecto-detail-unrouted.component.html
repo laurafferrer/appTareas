@@ -1,39 +1,47 @@
 <div *ngIf="status!=null">
-  <div class="d-flex justify-content-center my-3">
-      <div class="alert alert-danger" role="alert">
-          {{status!.error.message}} - {{status!.message}}
-      </div>
-  </div>
+    <div class="d-flex justify-content-center my-3">
+        <div class="alert alert-danger" role="alert">
+            {{status!.error.message}} - {{status!.message}}
+        </div>
+    </div>
 </div>
 
 <div *ngIf="status==null">
-  <table class="table table-striped table-hover">
-      <tbody>
-          <tr>
-              <th>Property</th>
-              <th>Value</th>
-          </tr>
-          <tr>
-              <th>id</th>
-              <td>{{oProyecto.id}}</td>
-          </tr>
-          <tr>
-              <th>nombre</th>
-              <td>{{oProyecto.nombre}}</td>
-          </tr>
-          <tr>
-              <th>usuario</th>
-              <td> <a [routerLink]="['/admin','usuario','view',oProyecto.usuario.id]">{{oProyecto.usuario.nombre}}
-                      {{oProyecto.usuario.apellidos}}</a></td>
-          </tr>
-          <tr>
-              <th>tareas</th>
-              <td>
-                  <a [routerLink]="['/admin','tarea','plist','byproyecto',oProyecto.id]"
-                      *ngIf="oProyecto.tareas>0">{{oProyecto.tareas}}</a>
-                  <span *ngIf="oProyecto.tareas==0">0</span>
-              </td>
-          </tr>
-      </tbody>
-  </table>
+    <table class="table table-striped table-hover">
+        <tbody>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <th>id</th>
+                <td>{{oProyecto.id}}</td>
+            </tr>
+            <tr>
+                <th>nombre</th>
+                <td>{{oProyecto.nombre}}</td>
+            </tr>
+            <tr>
+                <th>fecha inicio</th>
+                <td>{{oProyecto.fechaInicio | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            </tr>
+            <tr>
+                <th>fecha fin</th>
+                <td>{{oProyecto.fechaFin | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            </tr>
+            <tr>
+                <th>usuario</th>
+                <td> <a [routerLink]="['/admin','usuario','view',oProyecto.usuario.id]">{{oProyecto.usuario.nombre}}
+                        {{oProyecto.usuario.apellidos}}</a></td>
+            </tr>
+            <tr>
+                <th>tareas</th>
+                <td>
+                    <a [routerLink]="['/admin','tarea','plist','byproyecto',oProyecto.id]"
+                        *ngIf="oProyecto.tareas>0">{{oProyecto.tareas}}</a>
+                    <span *ngIf="oProyecto.tareas==0">0</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

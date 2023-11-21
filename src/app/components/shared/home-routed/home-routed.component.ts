@@ -12,7 +12,7 @@ import { IProyecto } from 'src/app/model/model.interfaces';
 export class HomeRoutedComponent implements OnInit {
 
   proyecto_id: number = 0;
-  reloadTareas: Subject<boolean> = new Subject<boolean>();
+  reloadProyectos: Subject<boolean> = new Subject<boolean>();
 
   constructor() { }
 
@@ -24,6 +24,6 @@ export class HomeRoutedComponent implements OnInit {
   }
 
   onTareaChange(bTarea: Boolean) {
-    this.reloadTareas.next(true);
+    this.reloadProyectos.next(true);
   }
 }

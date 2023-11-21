@@ -25,6 +25,8 @@
         <tr>
           <th (click)="doOrder('id')">ID</th>
           <th (click)="doOrder('nombre')">Nombre</th>
+          <th (click)="doOrder('fechaInicio')">Fecha inicio</th>
+          <th (click)="doOrder('fechaFin')">Fecha fin</th>
           <th (click)="doOrder('usuario')">Usuario</th>
           <th>Number of tareas</th>
           <th>Tools</th>
@@ -34,6 +36,8 @@
         <tr *ngFor="let p of oPage?.content" class="align-middle">
           <td class="text-end"><strong>{{p.id}}</strong></td>
           <td>{{p.nombre}}</td>
+          <td class="text-center">{{p.fechaInicio | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td class="text-center">{{p.fechaFin | date:'dd/MM/yyyy HH:mm:ss'}}</td>
           <td>
             <a [routerLink]="['/admin','proyecto','plist','byusuario',p.usuario.id]">({{p.usuario.id}}) {{p.usuario.nombre}}
               {{p.usuario.apellidos}}</a>

@@ -10,7 +10,7 @@
   <div class=" d-flex">
     <ol>
       <li *ngFor="let p of oPage?.content">
-        {{p.nombre}}({{p.usuario.username}} .. {{p.tareas}} reps)
+        {{p.nombre}}({{p.usuario.username}} {{p.fechaInicio | date:'dd/MM/yyyy HH:mm:ss'}} {{p.fechaFin | date:'dd/MM/yyyy HH:mm:ss'}} {{p.tareas}} reps)
       </li>
     </ol>
 

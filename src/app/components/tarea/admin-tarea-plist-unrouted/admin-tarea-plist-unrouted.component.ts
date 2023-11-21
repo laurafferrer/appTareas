@@ -12,6 +12,7 @@ import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 import { Subject } from 'rxjs';
 
 @Component({
+  providers: [ConfirmationService],
   selector: 'app-admin-tarea-plist-unrouted',
   templateUrl: './admin-tarea-plist-unrouted.component.html',
   styleUrls: ['./admin-tarea-plist-unrouted.component.css']
@@ -20,8 +21,8 @@ import { Subject } from 'rxjs';
 export class AdminTareaPlistUnroutedComponent implements OnInit {
 
   @Input() forceReload: Subject<boolean> = new Subject<boolean>();
-  @Input() id_usuario: number = 0; //filter by usuario
-  @Input() id_proyecto: number = 0; //filter by proyecto
+  @Input() usuario_id: number = 0; //filter by usuario
+  @Input() proyecto_id: number = 0; //filter by proyecto
 
   oPage: ITareaPage | undefined;
   oUsuario: IUsuario | null = null; // data of usuario if id_usuario is set for filter
@@ -43,10 +44,10 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
 
   ngOnInit() {
     this.getPage();
-    if (this.id_usuario > 0) {
+    if (this.usuario_id > 0) {
       this.getUsuario();
     }
-    if (this.id_proyecto > 0) {
+    if (this.proyecto_id > 0) {
       this.getProyecto();
     }
     this.forceReload.subscribe({
@@ -59,7 +60,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
   }
 
   getPage(): void {
-    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.id_usuario, this.id_proyecto).subscribe({
+    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.usuario_id, this.proyecto_id).subscribe({
       next: (data: ITareaPage) => {
         this.oPage = data;
         this.oPaginatorState.pageCount = data.totalPages;
@@ -87,10 +88,9 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
     this.getPage();
   }
 
-  ref: DynamicDialogRef | undefined;
-
   doView(u: ITarea) {
-    this.ref = this.oDialogService.open(AdminTareaDetailUnroutedComponent, {
+    let ref: DynamicDialogRef | undefined;
+    ref = this.oDialogService.open(AdminTareaDetailUnroutedComponent, {
       data: {
         id: u.id
       },
@@ -124,7 +124,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
   }
 
   getUsuario(): void {
-    this.oUsuarioAjaxService.getOne(this.id_usuario).subscribe({
+    this.oUsuarioAjaxService.getOne(this.usuario_id).subscribe({
       next: (data: IUsuario) => {
         this.oUsuario = data;
       },
@@ -136,7 +136,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
   }
 
   getProyecto(): void {
-    this.oProyectoAjaxService.getOne(this.id_proyecto).subscribe({
+    this.oProyectoAjaxService.getOne(this.proyecto_id).subscribe({
       next: (data: IProyecto) => {
         this.oProyecto = data;
       },

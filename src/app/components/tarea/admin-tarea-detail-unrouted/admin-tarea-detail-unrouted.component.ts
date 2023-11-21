@@ -20,7 +20,7 @@ export class AdminTareaDetailUnroutedComponent implements OnInit {
     private oTareaAjaxService: TareaAjaxService,
     @Optional() public ref: DynamicDialogRef,
     @Optional() public config: DynamicDialogConfig
-  ) { 
+  ) {
     if (config) {
       if (config.data) {
         this.id = config.data.id;
@@ -40,7 +40,9 @@ export class AdminTareaDetailUnroutedComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.status = error;
       }
+
     })
+
   }
 
 }
