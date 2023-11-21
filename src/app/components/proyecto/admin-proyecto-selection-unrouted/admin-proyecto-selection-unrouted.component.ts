@@ -13,7 +13,7 @@ import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 
 export class AdminProyectoSelectionUnroutedComponent implements OnInit {
 
-  @Input() id_user: number = 0; //filter by user
+  @Input() usuario_id: number = 0; //filter by usuario_id
 
   oPage: IProyectoPage | undefined;
   orderField: string = "id";

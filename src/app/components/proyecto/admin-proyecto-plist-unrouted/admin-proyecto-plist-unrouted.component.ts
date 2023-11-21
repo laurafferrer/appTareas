@@ -3,11 +3,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginatorState } from 'primeng/paginator';
-import { IProyecto, IProyectoPage } from 'src/app/model/model.interfaces';
+import { IProyecto, IProyectoPage, IUsuario } from 'src/app/model/model.interfaces';
 import { AdminProyectoDetailUnroutedComponent } from '../admin-proyecto-detail-unrouted/admin-proyecto-detail-unrouted.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 import { Subject } from 'rxjs';
+import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
 
 @Component({
   selector: 'app-admin-proyecto-plist-unrouted',
@@ -18,8 +19,10 @@ import { Subject } from 'rxjs';
 export class AdminProyectoPlistUnroutedComponent implements OnInit {
 
   @Input() forceReload: Subject<boolean> = new Subject<boolean>();
+  @Input() usuario_id: number = 0; //filter by usuario
 
   oPage: IProyectoPage | undefined;
+  oUsuario: IUsuario | null = null; // data of usuario if usuario_id is set for filter
   orderField: string = "id";
   orderDirection: string = "asc";
   oPaginatorState: PaginatorState = { first: 0, rows: 10, page: 0, pageCount: 0 };
@@ -28,17 +31,29 @@ export class AdminProyectoPlistUnroutedComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
 
   constructor(
+    private oUsuarioAjaxService: UsuarioAjaxService,
     private oProyectoAjaxService: ProyectoAjaxService,
     public oDialogService: DialogService,
     private oCconfirmationService: ConfirmationService,
     private oMatSnackBar: MatSnackBar
   ) { }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
+  ngOnInit() {
+    this.getPage();
+    if (this.usuario_id > 0) {
+      this.getUsuario();
+    }
+    this.forceReload.subscribe({
+      next: (v) => {
+        if (v) {
+          this.getPage();
+        }
+      }
+    });
   }
 
   getPage(): void {
-    this.oProyectoAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection).subscribe({
+    this.oProyectoAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.usuario_id).subscribe({
       next: (data: IProyectoPage) => {
         this.oPage = data;
         this.oPaginatorState.pageCount = data.totalPages;
@@ -97,6 +112,18 @@ export class AdminProyectoPlistUnroutedComponent implements OnInit {
         this.oMatSnackBar.open("The proyecto hasn't been removed.", "", { duration: 2000 });
       }
     });
+  }
+
+  getUsuario(): void {
+    this.oUsuarioAjaxService.getOne(this.usuario_id).subscribe({
+      next: (data: IUsuario) => {
+        this.oUsuario = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.status = error;
+      }
+
+    })
   }
 
 }

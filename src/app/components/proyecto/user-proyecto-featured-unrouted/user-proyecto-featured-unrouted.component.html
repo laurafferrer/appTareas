@@ -6,3 +6,13 @@
   </div>
 </div>
 
+<div *ngIf="status==null">
+  <div class=" d-flex">
+    <ol>
+      <li *ngFor="let p of oPage?.content">
+        {{p.nombre}}({{p.usuario.username}} .. {{p.tareas}} reps)
+      </li>
+    </ol>
+
+  </div>
+</div>

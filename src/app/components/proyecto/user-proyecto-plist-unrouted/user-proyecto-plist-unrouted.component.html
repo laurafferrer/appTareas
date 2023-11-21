@@ -26,4 +26,26 @@
       [totalRecords]="oPage?.totalElements || 0" [rowsPerPageOptions]="" [showPageLinks]="false"></p-paginator>
   </div>
 
+  <div class=" d-flex">
+    <ul class="list-group">
+
+      <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let t of oPage?.content"
+        (click)="doShowTareas(t)" [ngClass]="{active: t.id==activeProyecto?.id}">
+
+        <div class="ms-2 me-auto">
+          <a href="">{{t.nombre}}</a>
+        </div>
+        <div class="ms-1">
+          <span class="badge bg-light">
+            <span class="badge text-bg-warning"
+              *ngIf="t.usuario.apellidos==oSessionService.getUsername()">{{t.usuario.username}}</span>
+            <span class="badge text-bg-info"
+              *ngIf="t.usuario.username!=oSessionService.getUsername()">{{t.usuario.username}}</span>
+            <span class="badge bg-secondary rounded-pill">{{t.tareas}}</span>
+          </span>
+        </div>
+      </li>
+    </ul>
+
+  </div>
 </div>

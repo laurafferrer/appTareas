@@ -17,8 +17,8 @@ export class UserProyectoFormUnroutedComponent implements OnInit {
   @Input() id: number = 1;
   @Input() operation: formOperation = 'NEW'; //new or edit
 
-  threadForm!: FormGroup;
-  oProyecto: IProyecto = {  nombre: { id: 0 } } as IProyecto;
+  proyectoForm!: FormGroup;
+  oProyecto: IProyecto = {  usuario: { id: 0 } } as IProyecto;
   status: HttpErrorResponse | null = null;
 
 
@@ -34,11 +34,12 @@ export class UserProyectoFormUnroutedComponent implements OnInit {
   }
 
   initializeForm(oProyecto: IProyecto) {
-    this.threadForm = this.formBuilder.group({
+    this.proyectoForm = this.formBuilder.group({
       id: [oProyecto.id],
       nombre: [oProyecto.nombre, [Validators.required, Validators.minLength(10), Validators.maxLength(2048)]],
-      fecha_inicio: [oProyecto.fechaInicio],
-      fecha_fin: [oProyecto.fechaFin],
+      usuario: this.formBuilder.group({
+        id: [oProyecto.usuario.id, Validators.required]
+      })
     });
   }
 
@@ -60,35 +61,35 @@ export class UserProyectoFormUnroutedComponent implements OnInit {
   }
 
   public hasError = (controlName: string, errorName: string) => {
-    return this.threadForm.controls[controlName].hasError(errorName);
+    return this.proyectoForm.controls[controlName].hasError(errorName);
   }
 
   onSubmit() {
-    if (this.threadForm.valid) {
+    if (this.proyectoForm.valid) {
       if (this.operation === 'NEW') {
-        this.oProyectoAjaxService.newOne(this.threadForm.value).subscribe({
+        this.oProyectoAjaxService.newOne(this.proyectoForm.value).subscribe({
           next: (data: IProyecto) => {
-            this.oProyecto = { "nombre": {} } as IProyecto;
+            this.oProyecto = { "usuario": {} } as IProyecto;
             this.initializeForm(this.oProyecto); //el id se genera en el servidor
-            this.oMatSnackBar.open('Thread has been created.', '', { duration: 2000 });
+            this.oMatSnackBar.open('Proyecto has been created.', '', { duration: 2000 });
             this.oDynamicDialogRef.close(data);  
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.oMatSnackBar.open('Failed to create thread.', '', { duration: 2000 });
+            this.oMatSnackBar.open('Failed to create proyecto.', '', { duration: 2000 });
           }
         });
       } else {
-        this.oProyectoAjaxService.updateOne(this.threadForm.value).subscribe({
+        this.oProyectoAjaxService.updateOne(this.proyectoForm.value).subscribe({
           next: (data: IProyecto) => {
             this.oProyecto = data;
             this.initializeForm(this.oProyecto);
-            this.oMatSnackBar.open('Thread has been updated.', '', { duration: 2000 });
+            this.oMatSnackBar.open('Proyecto has been updated.', '', { duration: 2000 });
             this.oDynamicDialogRef.close(data);  
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.oMatSnackBar.open('Failed to update thread.', '', { duration: 2000 });
+            this.oMatSnackBar.open('Failed to update proyecto.', '', { duration: 2000 });
           }
         });
       }

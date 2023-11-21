@@ -8,6 +8,9 @@
 
 <div *ngIf="status==null">
   <div class="d-flex justify-content-between mb-3">
+    <h3 *ngIf="usuario_id>0">Filtered by usuario ({{usuario_id}} - {{oUsuario?.nombre}} {{oUsuario?.apellidos}}) <a type="button"
+        class="btn btn-danger btn-sm" *ngIf="usuario_id>0" [routerLink]="['/admin','proyecto','plist']">reset filter</a></h3>
+    <h3 *ngIf="!(usuario_id>0)">No active filter</h3>
     <h3>Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} proyectos.</h3>
   </div>
   <div class="flex justify-content-center mb-3">
@@ -21,27 +24,32 @@
       <thead>
         <tr>
           <th (click)="doOrder('id')">ID</th>
-          <th (click)="doOrder('nombres')">Title</th>
+          <th (click)="doOrder('nombre')">Nombre</th>
+          <th (click)="doOrder('usuario')">Usuario</th>
           <th>Number of tareas</th>
           <th>Tools</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let t of oPage?.content" class="align-middle">
-          <td class="text-end"><strong>{{t.id}}</strong></td>
-          <td>{{t.nombre}}</td>
+        <tr *ngFor="let p of oPage?.content" class="align-middle">
+          <td class="text-end"><strong>{{p.id}}</strong></td>
+          <td>{{p.nombre}}</td>
+          <td>
+            <a [routerLink]="['/admin','proyecto','plist','byusuario',p.usuario.id]">({{p.usuario.id}}) {{p.usuario.nombre}}
+              {{p.usuario.apellidos}}</a>
+          </td>
           <td class="text-center">
-            <a [routerLink]="['/admin','tarea','plist','byproyecto',t.id]" *ngIf="t.tareas>0">{{t.tareas}}</a>
-            <span *ngIf="t.tareas==0">0</span>
+            <a [routerLink]="['/admin','tarea','plist','byproyecto',tp.id]" *ngIf="p.tareas>0">{{p.tareas}}</a>
+            <span *ngIf="p.tareas==0">0</span>
           </td>
           <td class="text-center">
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-              <button class="btn btn-primary" [routerLink]="['/admin','proyecto','view',t.id]"><i
+              <button class="btn btn-primary" [routerLink]="['/admin','proyecto','view',p.id]"><i
                   class="pi pi-eye"></i></button>
-              <button class="btn btn-primary" (click)="doView(t)"><i class="pi pi-arrow-circle-up"></i></button>
-              <button class="btn btn-warning" [routerLink]="['/admin','proyecto','edit',t.id]"><i
+              <button class="btn btn-primary" (click)="doView(p)"><i class="pi pi-arrow-circle-up"></i></button>
+              <button class="btn btn-warning" [routerLink]="['/admin','proyecto','edit',p.id]"><i
                   class="pi pi-pencil"></i></button>
-              <button *ngIf="t.tareas==0" class="btn btn-danger" (click)="doRemove(t)"><i
+              <button *ngIf="p.tareas==0" class="btn btn-danger" (click)="doRemove(p)"><i
                   class="pi pi-trash"></i></button>
             </div>
           </td>

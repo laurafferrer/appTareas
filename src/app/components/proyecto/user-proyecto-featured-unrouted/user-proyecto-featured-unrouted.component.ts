@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginatorState } from 'primeng/paginator';
-import { IProyecto, IProyectoPage } from 'src/app/model/model.interfaces';
+import { IProyecto, IProyectoPage, IUsuario } from 'src/app/model/model.interfaces';
 import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 import { SessionAjaxService } from 'src/app/service/session.ajax.service';
 
@@ -17,6 +17,7 @@ import { SessionAjaxService } from 'src/app/service/session.ajax.service';
 export class UserProyectoFeaturedUnroutedComponent implements OnInit {
 
   oPage: IProyectoPage | undefined;
+  oUsuario: IUsuario | null = null; 
   orderField: string = "id";
   orderDirection: string = "desc";
   oPaginatorState: PaginatorState = { first: 0, rows: 10, page: 0, pageCount: 0 };
@@ -45,9 +46,5 @@ export class UserProyectoFeaturedUnroutedComponent implements OnInit {
       }
     })
   }
-
-
-
-
 
 }
