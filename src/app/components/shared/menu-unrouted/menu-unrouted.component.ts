@@ -24,13 +24,13 @@ export class MenuUnroutedComponent implements OnInit {
     private oUsuarioAjaxService: UsuarioAjaxService,
     private oRouter: Router
   ) {
-    
+
     this.oRouter.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         this.strUrl = ev.url;
       }
     })
-    
+
     this.strUserName = oSessionService.getUsername();
     this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
       next: (oUsuario: IUsuario) => {
@@ -82,5 +82,3 @@ export class MenuUnroutedComponent implements OnInit {
   }
 
 }
-
-
