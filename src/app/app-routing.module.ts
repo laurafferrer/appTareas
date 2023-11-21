@@ -33,14 +33,14 @@ const routes: Routes = [
   { path: 'admin/usuario/edit/:id', component: AdminUsuarioEditRoutedComponent },
   //--  
   { path: 'admin/proyecto/plist', component: AdminProyectoPlistRoutedComponent },
-  { path: 'admin/proyecto/plist/byuser/:id', component: AdminProyectoPlistRoutedComponent },
+  { path: 'admin/proyecto/plist/byusuario/:id', component: AdminProyectoPlistRoutedComponent },
   { path: 'admin/proyecto/view/:id', component: AdminProyectoViewRoutedComponent },    
   { path: 'admin/proyecto/new', component: AdminProyectoNewRoutedComponent },  
   { path: 'admin/proyecto/edit/:id', component: AdminProyectoEditRoutedComponent },  
   //--
   { path: 'admin/tarea/plist', component: AdminTareaPlistRoutedComponent },
-  { path: 'admin/tarea/plist/byuser/:iduser', component: AdminTareaPlistRoutedComponent },  
-  { path: 'admin/tarea/plist/byproyecto/:idproyecto', component: AdminTareaPlistRoutedComponent },  
+  { path: 'admin/tarea/plist/byusuario/:usuario_id', component: AdminTareaPlistRoutedComponent },  
+  { path: 'admin/tarea/plist/byproyecto/:proyecto_id', component: AdminTareaPlistRoutedComponent },  
   { path: 'admin/tarea/view/:id', component: AdminTareaViewRoutedComponent },    
   { path: 'admin/tarea/new', component: AdminTareaNewRoutedComponent},  
   { path: 'admin/tarea/edit/:id', component: AdminTareaEditRoutedComponent },
