@@ -53,7 +53,7 @@ export class AdminProyectoPlistUnroutedComponent implements OnInit {
   }
 
   getPage(): void {
-    this.oProyectoAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.usuario_id).subscribe({
+    this.oProyectoAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection).subscribe({
       next: (data: IProyectoPage) => {
         this.oPage = data;
         this.oPaginatorState.pageCount = data.totalPages;

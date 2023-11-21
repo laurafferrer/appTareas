@@ -39,7 +39,7 @@
               {{p.usuario.apellidos}}</a>
           </td>
           <td class="text-center">
-            <a [routerLink]="['/admin','tarea','plist','byproyecto',tp.id]" *ngIf="p.tareas>0">{{p.tareas}}</a>
+            <a [routerLink]="['/admin','tarea','plist','byproyecto',p.id]" *ngIf="p.tareas>0">{{p.tareas}}</a>
             <span *ngIf="p.tareas==0">0</span>
           </td>
           <td class="text-center">
