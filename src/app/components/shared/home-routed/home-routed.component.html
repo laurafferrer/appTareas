@@ -2,30 +2,26 @@
 
   <div class="row align-items-start">
     <div class="col-xxl-12 text-center p-3 mt-2">
-      <h1 class="title">APP TAREA</h1>
+      <h1 class="title">APP TAREAS</h1>
       <h2 class="subtitle">light your thoughts</h2>
     </div>
   </div>
   <div class="row align-items-start">
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 threads">
+      <app-user-proyecto-plist-unrouted (proyecto_selection)="onProyectoChange($event)" [reload]="reloadProyectos"></app-user-proyecto-plist-unrouted>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 replies">
+      <app-user-tarea-plist-unrouted [proyecto_id]="proyecto_id" (tarea_change)="onTareaChange($event)"></app-user-tarea-plist-unrouted>
+    </div>
     <div class="col-xxl-2 col-xl-2 col-lg-2 info">
       <div class="card">
         <div class="card-header">
-          Featured Users
+          Featured Usuarios
         </div>
         <div class="card-body">
           <app-user-usuario-featured-unrouted></app-user-usuario-featured-unrouted>
         </div>
       </div>
-      <!--
-      <div class="card mt-3">
-        <div class="card-header">
-          Featured Threads
-        </div>
-        <div class="card-body">
-          <app-user-thread-featured-unrouted></app-user-thread-featured-unrouted>
-        </div>
-      </div>
-      -->
     </div>
   </div>
 </div>
