@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { IProyecto, IUsuario, formOperation } from 'src/app/model/model.interfaces';
+import { IProyecto, ITarea, IUsuario, formOperation } from 'src/app/model/model.interfaces';
 import { AdminUsuarioSelectionUnroutedComponent } from '../../usuario/admin-usuario-selection-unrouted/admin-usuario-selection-unrouted.component';
 import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 import { CALENDAR_ES } from 'src/environment/environment';
@@ -22,7 +22,7 @@ export class AdminProyectoFormUnroutedComponent implements OnInit {
   es = CALENDAR_ES;
 
   proyectoForm!: FormGroup;
-  oProyecto: IProyecto = { fechaInicio: new Date(Date.now()), usuario: {} } as IProyecto;
+  oProyecto: IProyecto = { tarea: {} } as IProyecto;
   status: HttpErrorResponse | null = null;
 
   oDynamicDialogRef: DynamicDialogRef | undefined;
@@ -38,13 +38,15 @@ export class AdminProyectoFormUnroutedComponent implements OnInit {
   }
 
   initializeForm(oProyecto: IProyecto) {
+    const tareaID = oProyecto.tarea ? oProyecto.tarea.id : null;
     this.proyectoForm = this.formBuilder.group({
       id: [oProyecto.id],
-      nombre: [oProyecto.nombre, [Validators.required, Validators.minLength(1), Validators.maxLength(2048)]],
-      fechaInicio: [new Date(oProyecto.fechaInicio), [Validators.required]],
-      usuario: this.formBuilder.group({
-        id: [oProyecto.usuario.id, Validators.required]
-      })
+      nombre: [oProyecto.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      tarea: this.formBuilder.group({
+        id: [tareaID]
+      }),
+      
+      
     });
   }
 
@@ -71,49 +73,50 @@ export class AdminProyectoFormUnroutedComponent implements OnInit {
 
   onSubmit() {
     if (this.proyectoForm.valid) {
-      if (this.operation === 'NEW') {
-        this.oProyectoAjaxService.newOne(this.proyectoForm.value).subscribe({
+      console.log(this.proyectoForm)
+      if (this.operation == 'NEW') {
+        this.oProyectoAjaxService.create(this.proyectoForm.value).subscribe({
           next: (data: IProyecto) => {
-            this.oProyecto = { "usuario": {} } as IProyecto;
-            this.initializeForm(this.oProyecto); //el id se genera en el servidor
-            this.oMatSnackBar.open('Proyecto has been created.', '', { duration: 2000 });
+            this.oProyecto = data;
+            this.initializeForm(this.oProyecto);
+            this.matSnackBar.open("Proyecto has been created.", '', { duration: 1200 });
             this.router.navigate(['/admin', 'proyecto', 'view', data]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.oMatSnackBar.open('Failed to create proyecto.', '', { duration: 2000 });
+            this.matSnackBar.open("Can't create proyecto.", '', { duration: 1200 });
           }
         });
       } else {
-        this.oProyectoAjaxService.updateOne(this.proyectoForm.value).subscribe({
+        this.proyectoService.update(this.proyectoForm.value).subscribe({
           next: (data: IProyecto) => {
             this.oProyecto = data;
             this.initializeForm(this.oProyecto);
-            this.oMatSnackBar.open('Proyecto has been updated.', '', { duration: 2000 });
+            this.matSnackBar.open("proyecto has been updated.", '', { duration: 1200 });
             this.router.navigate(['/admin', 'proyecto', 'view', this.oProyecto.id]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.oMatSnackBar.open('Failed to update proyecto.', '', { duration: 2000 });
+            this.matSnackBar.open("Can't update proyecto.", '', { duration: 1200 });
           }
         });
       }
     }
   }
 
-  onShowUsuariosSelection() {
+  onShowTareaSelection() {
     this.oDynamicDialogRef = this.oDialogService.open(AdminUsuarioSelectionUnroutedComponent, {
-      header: 'Select a Usuario',
+      header: 'Select a Tarea',
       width: '80%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true
     });
 
-    this.oDynamicDialogRef.onClose.subscribe((oUsuario: IUsuario) => {
-      if (oUsuario) {
-        this.oProyecto.usuario = oUsuario;
-        this.proyectoForm.controls['usuario'].patchValue({ id: oUsuario.id })
+    this.oDynamicDialogRef.onClose.subscribe((oTarea: ITarea) => {
+      if (oTarea) {
+        this.oProyecto.tarea = oTarea;
+        this.proyectoForm.controls['tarea'].patchValue({ id: oTarea.id })
       }
     });
   }

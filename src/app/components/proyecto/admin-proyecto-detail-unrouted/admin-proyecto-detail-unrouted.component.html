@@ -23,17 +23,12 @@
             </tr>
             <tr>
                 <th>fecha inicio</th>
-                <td>{{oProyecto.fechaInicio | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                <td>{{oProyecto.fechaInicio}}</td>
             </tr>
             <tr>
-                <th>usuario</th>
-                <td> <a [routerLink]="['/admin','usuario','view',oProyecto.usuario.id]">{{oProyecto.usuario.nombre}}
-                        {{oProyecto.usuario.apellidos}}</a></td>
-            </tr>
-            <!--<tr>
                 <th>tarea</th>
                 <td> <a [routerLink]="['/admin','tarea','view',oProyecto.tarea.id]">{{oProyecto.tarea.nombre}}</a></td>
-            </tr>-->
+            </tr>
         </tbody>
     </table>
 </div>

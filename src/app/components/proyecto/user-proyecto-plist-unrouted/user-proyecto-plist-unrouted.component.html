@@ -13,7 +13,7 @@
        (change)="onOrderChange($event)" [checked]="activeOrder">
     <label class="btn btn-outline-success" for="success-outlined">by new</label>
 
-    <h5 class="px-2">Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} proyectos.</h5>
+    <h5 class="px-2">Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} threads.</h5>
 
     <input type="radio" class="btn-check btn-sm" name="options-outlined" id="danger-outlined" autocomplete="off"
        (change)="onOrderChange($event)" [checked]="!activeOrder">
@@ -38,11 +38,8 @@
         <div class="ms-1">
           <span class="badge bg-light">
             <span class="badge text-bg-warning"
-              *ngIf="t.usuario.apellidos==oSessionService.getUsername()">{{t.usuario.username}}</span>
-            <span class="badge text-bg-info"
-              *ngIf="t.usuario.username!=oSessionService.getUsername()">{{t.usuario.username}}</span>
-              <span class="badge text-bg-secondary">{{t.fechaInicio | date:'dd/MM/yyyy HH:mm:ss'}}</span>
-            <span class="badge bg-secondary rounded-pill">{{t.tarea}}</span>
+              *ngIf="t.tarea.id"></span>
+           
           </span>
         </div>
       </li>

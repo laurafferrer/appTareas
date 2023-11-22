@@ -8,51 +8,37 @@
 
 <div *ngIf="status==null">
   <div class="d-flex justify-content-between mb-3">
-    <h3 *ngIf="usuario_id>0">Filtered by usuario ({{usuario_id}} - {{oUsuario?.nombre}} {{oUsuario?.apellidos}}) <a type="button"
-        class="btn btn-danger btn-sm" *ngIf="usuario_id>0" [routerLink]="['/admin','proyecto','plist']">reset filter</a></h3>
-    <h3 *ngIf="!(usuario_id>0)">No active filter</h3>
-    <h3>Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} proyectos.</h3>
+    <h3>Mostrando {{oPage?.numberOfElements}} de {{oPage?.totalElements}} proyectos.</h3>
   </div>
   <div class="flex justify-content-center mb-3">
     <p-paginator (onPageChange)="onPageChang($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
       [totalRecords]="oPage?.totalElements || 0" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
   </div>
 
-
   <div class="mb-5 ">
     <table class="table table-bordered table-striped table-hover table-sm">
       <thead>
         <tr>
           <th (click)="doOrder('id')">ID</th>
-          <th (click)="doOrder('nombre')">Nombre</th>
-          <th (click)="doOrder('fechaInicio')">Fecha inicio</th>
-          <th (click)="doOrder('usuario')">Usuario</th>
-          <th>Number of tareas</th>
-          <th>Tools</th>
+          <th (click)="doOrder('name')">Nombre</th>
+          <th (click)="doOrder('tarea')">Tarea</th>
+        
+          <th>Herramientas</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of oPage?.content" class="align-middle">
-          <td class="text-end"><strong>{{p.id}}</strong></td>
-          <td>{{p.nombre}}</td>
-          <td class="text-center">{{p.fechaInicio | date:'dd/MM/yyyy'}}</td>
-          <td>
-            <a [routerLink]="['/admin','proyecto','plist','byusuario',p.usuario.id]">({{p.usuario.id}}) {{p.usuario.nombre}}
-              {{p.usuario.apellidos}}</a>
-          </td>
-          <td class="text-center">
-            <a [routerLink]="['/admin','tarea','plist','bytarea',p.id]" *ngIf="p.tarea>0">{{p.tarea}}</a>
-            <span *ngIf="p.tarea==0">0</span>
-          </td>
+        <tr *ngFor="let r of oPage?.content" class="align-middle text-center">
+          <td  class="text-center"><strong>{{r.id}}</strong></td>
+          <td>{{r.name}}</td>
+          <td  class="text-center">{{r.tarea.id}} </td>
           <td class="text-center">
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-              <button class="btn btn-primary" [routerLink]="['/admin','proyecto','view',p.id]"><i
+              <button class="btn btn-primary" [routerLink]="['/admin','proyecto','view',r.id]"><i
                   class="pi pi-eye"></i></button>
-              <button class="btn btn-primary" (click)="doView(p)"><i class="pi pi-arrow-circle-up"></i></button>
-              <button class="btn btn-warning" [routerLink]="['/admin','proyecto','edit',p.id]"><i
+              <button class="btn btn-success" (click)="doView(r)"><i class="pi pi-arrow-circle-up"></i></button>
+              <button class="btn btn-warning" [routerLink]="['/admin','proyecto','edit',r.id]"><i
                   class="pi pi-pencil"></i></button>
-              <button *ngIf="p.tarea==0" class="btn btn-danger" (click)="doRemove(p)"><i
-                  class="pi pi-trash"></i></button>
+              <button class="btn btn-danger" (click)="doRemove(r)"><i class="pi pi-trash"></i></button>
             </div>
           </td>
         </tr>
@@ -61,9 +47,10 @@
   </div>
 </div>
 
+
 <p-confirmDialog #cd [style]="{ width: '30vw' }">
   <ng-template pTemplate="header">
-    <h5><i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem"></i> Proyecto removal</h5>
+    <h5><i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem"></i> proyecto removal</h5>
   </ng-template>
   <ng-template pTemplate="message">
     <div class="container d-flex align-items-center justify-content-center">
@@ -71,8 +58,8 @@
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <p>¿Are you sure to remove proyecto?</p>
+    <p>¿Seguro que quieres eliminar el proyecto?</p>
     <button class="btn btn-primary mx-1" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-    <button class="btn btn-danger mx-1" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    <button class="btn btn-danger mx-1" pButton icon="pi pi-check" label="Sí" (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
