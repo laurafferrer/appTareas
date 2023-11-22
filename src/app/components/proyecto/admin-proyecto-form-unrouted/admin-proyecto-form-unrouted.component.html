@@ -37,15 +37,6 @@
             </div>
           </div>
         </div>
-        <div class="row mb-3">
-          <label for="fechaFin" class="col-sm-2 col-form-label"> Fecha fin:</label>
-          <div class="col-sm-10">
-            <p-calendar formControlName="fechaFin" [locale]="es" dateFormat="dd/mm/yy" inputId="spanish"
-              [showIcon]="true" [showTime]="true" [showSeconds]="true"></p-calendar>
-            <div *ngIf="hasError('fechaFin', 'required')" class="text-danger"> You must set a valid date
-            </div>
-          </div>
-        </div>
 
         <div formGroupName="usuario">
           <div class="form-group">

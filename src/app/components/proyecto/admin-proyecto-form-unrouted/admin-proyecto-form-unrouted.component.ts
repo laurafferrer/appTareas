@@ -22,7 +22,7 @@ export class AdminProyectoFormUnroutedComponent implements OnInit {
   es = CALENDAR_ES;
 
   proyectoForm!: FormGroup;
-  oProyecto: IProyecto = { fechaInicio: new Date(Date.now()), fechaFin: new Date(Date.now()), usuario: {} } as IProyecto;
+  oProyecto: IProyecto = { fechaInicio: new Date(Date.now()), usuario: {} } as IProyecto;
   status: HttpErrorResponse | null = null;
 
   oDynamicDialogRef: DynamicDialogRef | undefined;
@@ -42,7 +42,6 @@ export class AdminProyectoFormUnroutedComponent implements OnInit {
       id: [oProyecto.id],
       nombre: [oProyecto.nombre, [Validators.required, Validators.minLength(1), Validators.maxLength(2048)]],
       fechaInicio: [new Date(oProyecto.fechaInicio), [Validators.required]],
-      fechaFin: [new Date(oProyecto.fechaFin), [Validators.required]],
       usuario: this.formBuilder.group({
         id: [oProyecto.usuario.id, Validators.required]
       })

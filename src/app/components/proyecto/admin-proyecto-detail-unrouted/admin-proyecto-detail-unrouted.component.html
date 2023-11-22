@@ -26,10 +26,6 @@
                 <td>{{oProyecto.fechaInicio | date:'dd/MM/yyyy HH:mm:ss'}}</td>
             </tr>
             <tr>
-                <th>fecha fin</th>
-                <td>{{oProyecto.fechaFin | date:'dd/MM/yyyy HH:mm:ss'}}</td>
-            </tr>
-            <tr>
                 <th>usuario</th>
                 <td> <a [routerLink]="['/admin','usuario','view',oProyecto.usuario.id]">{{oProyecto.usuario.nombre}}
                         {{oProyecto.usuario.apellidos}}</a></td>

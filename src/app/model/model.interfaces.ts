@@ -55,7 +55,6 @@ export interface IUsuarioPage extends IPage<IUsuario> {
 export interface IProyecto extends IEntity {
     nombre: string,
     fechaInicio: Date,
-    fechaFin: Date,
     tareas: number,
     usuario: IUsuario
 }
