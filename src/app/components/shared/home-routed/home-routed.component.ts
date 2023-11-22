@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { IProyecto } from 'src/app/model/model.interfaces';
-
+import { HttpClient } from "@angular/common/http";
+import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
+import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
+import { ITarea } from 'src/app/model/model.interfaces';
+import { Observer } from 'rxjs';
+import { SessionAjaxService } from 'src/app/service/session.ajax.service';
 
 @Component({
   selector: 'app-home-routed',
@@ -10,20 +13,25 @@ import { IProyecto } from 'src/app/model/model.interfaces';
 })
 
 export class HomeRoutedComponent implements OnInit {
+  strUserName: string = '';
+  totalTareas: number = 0;
+  totalTareasEnStock: number = 0;
+  tareas: ITarea[] = [];
+  categoriasConCantidad: { categoria: string, cantidad: number }[] = [];
 
-  proyecto_id: number = 0;
-  reloadProyectos: Subject<boolean> = new Subject<boolean>();
-
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private proyectoService: ProyectoAjaxService,
+    private tareaService : TareaAjaxService,
+    private oSessionService: SessionAjaxService
+  ) { }
 
   ngOnInit() {
+    this.strUserName = this.oSessionService.getUsername();
   }
 
-  onProyectoChange(oProyecto: IProyecto) {
-    this.proyecto_id = oProyecto.id;
-  }
-
-  onTareaChange(bTarea: Boolean) {
-    this.reloadProyectos.next(true);
-  }
 }
+
+
+
+

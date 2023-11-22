@@ -33,6 +33,7 @@ import { ProyectoAjaxService } from './service/proyecto.ajax.service';
 import { TareaAjaxService } from './service/tarea.ajax.service';
 import { SessionAjaxService } from './service/session.ajax.service';
 //--
+import { HomeUserComponent } from './components/shared/home-user/home-user.component';
 import { HomeRoutedComponent } from './components/shared/home-routed/home-routed.component';
 import { MenuUnroutedComponent } from './components/shared/menu-unrouted/menu-unrouted.component';
 import { LogoutRoutedComponent } from './components/shared/logout-routed/logout-routed.component';
@@ -79,6 +80,7 @@ import { UserTareaFormUnroutedComponent } from './components/tarea/user-tarea-fo
   declarations: [
     TrimPipe,
     AppComponent,
+    HomeUserComponent,
     HomeRoutedComponent,
     MenuUnroutedComponent,
     FooterUnroutedComponent,

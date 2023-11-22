@@ -32,6 +32,7 @@ export class MenuUnroutedComponent implements OnInit {
     })
     
     this.strUserName = oSessionService.getUsername();
+
     this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
       next: (oUsuario: IUsuario) => {
         this.oSessionUser = oUsuario;
@@ -45,11 +46,18 @@ export class MenuUnroutedComponent implements OnInit {
   ngOnInit() {
     this.oSessionService.on().subscribe({
       next: (data: SessionEvent) => {
+        console.log(data);
+        console.log(this.strUserName);
+     
         if (data.type == 'login') {
-          this.strUserName = this.oSessionService.getUsername();
+          console.log(data);
+          this.strUserName =  this.oSessionService.getUsername();
+          console.log(this.strUserName);
           this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
+           
             next: (oUsuario: IUsuario) => {
               this.oSessionUser = oUsuario;
+            
             },
             error: (error: HttpErrorResponse) => {
               console.log(error);

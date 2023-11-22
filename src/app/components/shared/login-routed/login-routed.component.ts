@@ -39,12 +39,16 @@ export class LoginRoutedComponent implements OnInit {
         next: (data: string) => {
           this.oSessionService.setToken(data);
           this.oSessionService.emit({ type: 'login' });
-          this.oMatSnackBar.open("Loggin successfull.", '', { duration: 2000 });
-          this.oRouter.navigate(['/home']);
+          this.oMatSnackBar.open("Login successful.", '', { duration: 2000 });
+          if (this.loginForm.value.username === 'superuser') {
+            this.oRouter.navigate(['/home']); 
+          } else {
+            this.oRouter.navigate(['/userhome']); 
+          }
         },
         error: (error: HttpErrorResponse) => {
           this.status = error;
-          this.oMatSnackBar.open("Error in loggin operation.", '', { duration: 2000 });
+          this.oMatSnackBar.open("Error in login operation.", '', { duration: 2000 });
         }
       });
     }
@@ -56,7 +60,7 @@ export class LoginRoutedComponent implements OnInit {
 
   loginAdmin() {
     this.loginForm.setValue({
-      username: 'laura',
+      username: 'superuser',
       password: 'foxforum'
     })
   }

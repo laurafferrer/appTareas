@@ -1,0 +1,20 @@
+
+.custom-card {
+    background-color: #ffffff; /* Color de fondo */
+ 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .custom-card:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+  }
+  
+  .custom-card .mat-card-header {
+    background-color: #343a40; /* Color de fondo para el encabezado */
+    color: white; /* Color del texto del encabezado */
+  }
+
+  .button{
+    background-color: #a0e2b3; /* Color de fondo para el encabezado */
+    color: white; /* Color del texto del encabezado */
+  }
