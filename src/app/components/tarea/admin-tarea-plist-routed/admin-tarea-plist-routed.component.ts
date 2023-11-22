@@ -15,8 +15,6 @@ import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
 export class AdminTareaPlistRoutedComponent implements OnInit {
 
   forceReload: Subject<boolean> = new Subject<boolean>();
-  usuario_id: number;
-  proyecto_id: number;
   bLoading: boolean = false;
 
   constructor(
@@ -25,8 +23,6 @@ export class AdminTareaPlistRoutedComponent implements OnInit {
     private oConfirmationService: ConfirmationService,
     private oMatSnackBar: MatSnackBar
   ) {
-    this.usuario_id = parseInt(this.oActivatedRoute.snapshot.paramMap.get("usuario_id") ?? "0");
-    this.proyecto_id = parseInt(this.oActivatedRoute.snapshot.paramMap.get("proyecto_id") ?? "0");
   }
 
   ngOnInit() { }

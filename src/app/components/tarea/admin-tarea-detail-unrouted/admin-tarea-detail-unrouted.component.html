@@ -21,15 +21,6 @@
                 <th>nombre</th>
                 <td>{{oTarea.nombre}}</td>
             </tr>
-            <tr>
-                <th>usuario</th>
-                <td> <a [routerLink]="['/admin','usuario','view',oTarea.usuario.id]">{{oTarea.usuario.nombre}}
-                        {{oTarea.usuario.apellidos}}</a></td>
-            </tr>
-            <tr>
-                <th>proyecto</th>
-                <td> <a [routerLink]="['/admin','proyecto','view',oTarea.proyecto.id]">{{oTarea.proyecto.nombre}}</a> </td>
-            </tr>
         </tbody>
     </table>
 </div>

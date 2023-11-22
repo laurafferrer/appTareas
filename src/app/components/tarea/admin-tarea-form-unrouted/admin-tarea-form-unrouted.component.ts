@@ -21,7 +21,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
   @Input() operation: formOperation = 'NEW'; // new or edit
 
   tareaForm!: FormGroup;
-  oTarea: ITarea = { usuario: {}, proyecto: {} } as ITarea;
+  oTarea: ITarea = { id: 0, nombre: '' };
   status: HttpErrorResponse | null = null;
 
   oDynamicDialogRef: DynamicDialogRef | undefined;
@@ -39,13 +39,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
   initializeForm(oTarea: ITarea) {
     this.tareaForm = this.formBuilder.group({
       id: [oTarea.id],
-      title: [oTarea.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      usuario: this.formBuilder.group({
-        id: [oTarea.usuario.id, Validators.required]
-      }),
-      proyecto: this.formBuilder.group({
-        id: [oTarea.proyecto.id, Validators.required]
-      })
+      nombre: [oTarea.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     });
   }
 
@@ -75,7 +69,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
       if (this.operation == 'NEW') {
         this.oTareaAjaxService.newOne(this.tareaForm.value).subscribe({
           next: (data: ITarea) => {
-            this.oTarea = { "usuario": {}, "proyecto": {} } as ITarea;
+            this.oTarea = { id: 0, nombre: '' };
             this.initializeForm(this.oTarea);
             this.matSnackBar.open("Tarea has been created.", '', { duration: 2000 });
             this.router.navigate(['/admin', 'tarea', 'view', data]);
@@ -101,40 +95,5 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
       }
     }
   }
-
-  onShowUsuariosSelection() {
-    this.oDynamicDialogRef = this.oDialogService.open(AdminUsuarioSelectionUnroutedComponent, {
-      header: 'Select a Usuario',
-      width: '80%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      maximizable: true
-    });
-
-    this.oDynamicDialogRef.onClose.subscribe((oUsuario: IUsuario) => {
-      if (oUsuario) {
-        this.oTarea.usuario = oUsuario;
-        this.tareaForm.controls['usuario'].patchValue({ id: oUsuario.id })
-      }
-    });
-  }
-
-  onShowProyectosSelection() {
-    this.oDynamicDialogRef = this.oDialogService.open(AdminProyectoSelectionUnroutedComponent, {
-      header: 'Select a proyecto',
-      width: '80%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      maximizable: true
-    });
-
-    this.oDynamicDialogRef.onClose.subscribe((oProyecto: IProyecto) => {
-      if (oProyecto) {
-        this.oTarea.proyecto = oProyecto;
-        this.tareaForm.controls['proyecto'].patchValue({ id: oProyecto.id })
-      }
-    });
-  }
-
 
 }

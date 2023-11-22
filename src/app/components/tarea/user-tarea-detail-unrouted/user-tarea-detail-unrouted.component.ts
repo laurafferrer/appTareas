@@ -14,7 +14,7 @@ export class UserTareaDetailUnroutedComponent implements OnInit {
 
   @Input() id: number = 1;
 
-  oTarea: ITarea = { usuario: {}, proyecto: {} } as ITarea;
+  oTarea: ITarea = { id: 0, nombre: '' };
   status: HttpErrorResponse | null = null;
 
   constructor(

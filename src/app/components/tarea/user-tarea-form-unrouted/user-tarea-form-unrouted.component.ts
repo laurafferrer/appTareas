@@ -15,11 +15,10 @@ import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
 export class UserTareaFormUnroutedComponent implements OnInit {
 
   replyForm!: FormGroup;
-  oTarea: ITarea = { "usuario": { id: 0 }, "proyecto": { id: 0 } } as ITarea;
+  oTarea: ITarea = { id: 0, nombre: '' };
   status: HttpErrorResponse | null = null;
   //---
   id: number = 0;
-  proyecto_id: number = 0;
   operation: formOperation = 'NEW'; // new or edit
 
   constructor(
@@ -37,11 +36,6 @@ export class UserTareaFormUnroutedComponent implements OnInit {
         } else {
           this.oTarea.id = 0;
         }
-        if (oDynamicDialogConfig.data.proyecto_id) {
-          this.oTarea.proyecto = { id: oDynamicDialogConfig.data.proyecto_id } as IProyecto;
-        } else {
-          this.oTarea.proyecto = {} as IProyecto;
-        }
         if (oDynamicDialogConfig.data.operation) {
           this.operation = oDynamicDialogConfig.data.operation;
         } else {
@@ -56,13 +50,7 @@ export class UserTareaFormUnroutedComponent implements OnInit {
   initializeForm(oTarea: ITarea) {
     this.replyForm = this.formBuilder.group({
       id: [oTarea.id],
-      title: [oTarea.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      user: this.formBuilder.group({
-        id: [oTarea.usuario.id, Validators.required]
-      }),
-      thread: this.formBuilder.group({
-        id: [oTarea.proyecto.id, Validators.required]
-      })
+      nombre: [oTarea.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     });
   }
 
@@ -92,7 +80,7 @@ export class UserTareaFormUnroutedComponent implements OnInit {
       if (this.operation == 'NEW') {
         this.oTareaAjaxService.newOne(this.replyForm.value).subscribe({
           next: (data: ITarea) => {
-            this.oTarea = { "usuario": {}, "proyecto": {} } as ITarea;
+            this.oTarea = { id: 0, nombre: '' };
             this.initializeForm(this.oTarea);
             this.matSnackBar.open("Reply has been created.", '', { duration: 2000 });
             this.oDynamicDialogRef.close(data);            
@@ -107,12 +95,12 @@ export class UserTareaFormUnroutedComponent implements OnInit {
           next: (data: ITarea) => {
             this.oTarea = data;
             this.initializeForm(this.oTarea);
-            this.matSnackBar.open("Reply has been updated.", '', { duration: 2000 });
+            this.matSnackBar.open("Tarea has been updated.", '', { duration: 2000 });
             this.oDynamicDialogRef.close(data);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.matSnackBar.open("Can't update reply.", '', { duration: 2000 });
+            this.matSnackBar.open("Can't update tarea.", '', { duration: 2000 });
           }
         });
       }

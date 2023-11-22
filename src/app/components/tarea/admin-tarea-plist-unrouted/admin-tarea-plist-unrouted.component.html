@@ -8,12 +8,6 @@
 
 <div *ngIf="status==null">
   <div class="d-flex justify-content-between mb-3">
-    <h3 *ngIf="proyecto_id>0">Filtered by proyecto ({{proyecto_id}} - {{oProyecto?.nombre | trimming}}) <a type="button"
-        class="btn btn-danger btn-sm" *ngIf="proyecto_id>0" [routerLink]="['/admin','tarea','plist']">reset filter</a>
-    </h3>
-    <h3 *ngIf="usuario_id>0">Filtered by usuario ({{usuario_id}} - {{oUsuario?.nombre}} {{oUsuario?.apellidos}}) <a type="button"
-        class="btn btn-danger btn-sm" *ngIf="usuario_id>0" [routerLink]="['/admin','tarea','plist']">reset filter</a></h3>
-    <h3 *ngIf="!(usuario_id>0)&&!(proyecto_id>0)">No active filter</h3>
     <h3>Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} tareas</h3>
   </div>
   <div class="flex justify-content-center mb-3">
@@ -28,8 +22,6 @@
         <tr>
           <th (click)="doOrder('id')">ID</th>
           <th (click)="doOrder('nombre')">Nombre</th>
-          <th (click)="doOrder('usuario')">Usuario</th>          
-          <th (click)="doOrder('proyecto')">Proyecto</th>
           <th>Tools</th>
         </tr>
       </thead>
@@ -37,15 +29,6 @@
         <tr *ngFor="let t of oPage?.content" class="align-middle">
           <td class="text-end"><strong>{{t.id}}</strong></td>
           <td pTooltip="{{t.nombre}}">{{t.nombre| trimming:20}}</td>
-          <td>
-            <a [routerLink]="['/admin','tarea','plist','byusuario',t.usuario.id]">({{t.usuario.id}}) {{t.usuario.nombre}}
-              {{t.usuario.apellidos}}</a>
-          </td>
-          <td>
-            <a [routerLink]="['/admin','tarea','plist','byproyecto',t.proyecto.id]">({{t.proyecto.id}})
-              {{t.proyecto.nombre}}
-            </a>
-          </td>
           <td class="text-center">
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
               <button class="btn btn-primary" [routerLink]="['/admin','tarea','view',t.id]"><i

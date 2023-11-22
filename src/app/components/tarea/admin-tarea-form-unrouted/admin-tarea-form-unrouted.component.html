@@ -20,31 +20,6 @@
             <mat-error *ngIf="hasError('nombre', 'maxlength')">Exceeds characters limit</mat-error>
           </mat-form-field>
         </div>
-
-        <div formGroupName="usuario">
-          <div class="form-group">
-            <mat-form-field [style.width.px]=100>
-              <mat-label>USUARIO:</mat-label>
-              <input matInput formControlName="id" placeholder="USUARIO" required readonly>
-            </mat-form-field>
-            <button class="btn btn-primary" type="button" (click)="onShowUsuariosSelection()"> <i class="pi pi-search"></i>
-              Find a usuario</button>
-            {{oTarea.usuario.nombre}} {{oTarea.usuario.apellidos}}
-          </div>
-        </div>
-        <div formGroupName="proyecto">
-          <div class="form-group">
-            <mat-form-field [style.width.px]=100>
-              <mat-label>PROYECTO:</mat-label>
-              <input matInput formControlName="id" placeholder="PROYECTO" required readonly>
-            </mat-form-field>
-            <button class="btn btn-primary" type="button" (click)="onShowProyectosSelection()"> <i
-                class="pi pi-search"></i>
-              Find a proyecto</button>
-            {{oTarea.proyecto.nombre}}
-          </div>
-        </div>
-
         <div class="text-center mt-5">
           <button mat-raised-button color="primary" type="submit" [disabled]="!tareaForm.valid">Save tarea</button>
         </div>

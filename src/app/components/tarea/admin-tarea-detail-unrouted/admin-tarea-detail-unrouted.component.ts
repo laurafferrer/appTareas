@@ -13,7 +13,7 @@ export class AdminTareaDetailUnroutedComponent implements OnInit {
 
   @Input() id: number = 1;
 
-  oTarea: ITarea = { usuario: {}, proyecto: {} } as ITarea;
+  oTarea: ITarea = { id: 0, nombre: '' };
   status: HttpErrorResponse | null = null;
 
   constructor(
@@ -27,6 +27,7 @@ export class AdminTareaDetailUnroutedComponent implements OnInit {
       }
     }
   }
+
 
   ngOnInit() {
     this.getOne();
