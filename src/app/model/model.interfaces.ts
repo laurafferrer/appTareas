@@ -45,7 +45,6 @@ export interface IUsuario extends IEntity {
     apellidos: string,
     username: string,
     puesto: boolean,
-    proyectos: number,
     tareas: number
 }
 
@@ -55,15 +54,16 @@ export interface IUsuarioPage extends IPage<IUsuario> {
 export interface IProyecto extends IEntity {
     nombre: string,
     fechaInicio: Date,
-    tarea: ITarea,
-    usuario: IUsuario
+    tarea: ITarea
 }
 
 export interface IProyectoPage extends IPage<IProyecto> {
 }
 
 export interface ITarea extends IEntity {
-    nombre: string
+    nombre: string,
+    usuario: IUsuario,
+    proyecto: number
 }
 
 export interface ITareaPage extends IPage<ITarea> {

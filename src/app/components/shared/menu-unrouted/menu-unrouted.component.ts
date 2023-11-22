@@ -15,7 +15,7 @@ import { NavigationEnd, Router } from '@angular/router';
 export class MenuUnroutedComponent implements OnInit {
 
   strUserName: string = "";
-  oSessionUsuario: IUsuario | null = null;
+  oSessionUser: IUsuario | null = null;
   strUrl: string = "";
 
   constructor(
@@ -24,17 +24,17 @@ export class MenuUnroutedComponent implements OnInit {
     private oUsuarioAjaxService: UsuarioAjaxService,
     private oRouter: Router
   ) {
-
+    
     this.oRouter.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         this.strUrl = ev.url;
       }
     })
-
+    
     this.strUserName = oSessionService.getUsername();
     this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
       next: (oUsuario: IUsuario) => {
-        this.oSessionUsuario = oUsuario;
+        this.oSessionUser = oUsuario;
       },
       error: (error: HttpErrorResponse) => {
         console.log(error);
@@ -49,7 +49,7 @@ export class MenuUnroutedComponent implements OnInit {
           this.strUserName = this.oSessionService.getUsername();
           this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
             next: (oUsuario: IUsuario) => {
-              this.oSessionUsuario = oUsuario;
+              this.oSessionUser = oUsuario;
             },
             error: (error: HttpErrorResponse) => {
               console.log(error);
@@ -63,12 +63,12 @@ export class MenuUnroutedComponent implements OnInit {
     });
   }
 
-  doSessionUsuarioView($event: Event) {
-    if (this.oSessionUsuario) {
+  doSessionUserView($event: Event) {
+    if (this.oSessionUser) {
       let ref: DynamicDialogRef | undefined;
       ref = this.oDialogService.open(UserUsuarioDetailUnroutedComponent, {
         data: {
-          id: this.oSessionUsuario.id
+          id: this.oSessionUser.id
         },
         header: 'View of usuario',
         width: '50%',
@@ -82,3 +82,5 @@ export class MenuUnroutedComponent implements OnInit {
   }
 
 }
+
+

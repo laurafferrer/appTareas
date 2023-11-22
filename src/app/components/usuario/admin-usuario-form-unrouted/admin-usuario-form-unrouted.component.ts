@@ -62,7 +62,7 @@ export class AdminUsuarioFormUnroutedComponent implements OnInit {
   onSubmit() {
     if (this.userForm.valid) {
       if (this.operation == 'NEW') {
-        this.oUsuarioAjaxService.newOne(this.userForm.value).subscribe({
+        this.oUsuarioAjaxService.create(this.userForm.value).subscribe({
           next: (data: IUsuario) => {
             this.oUsuario = data;
             this.initializeForm(this.oUsuario);
@@ -77,7 +77,7 @@ export class AdminUsuarioFormUnroutedComponent implements OnInit {
         })
 
       } else {
-        this.oUsuarioAjaxService.updateOne(this.userForm.value).subscribe({
+        this.oUsuarioAjaxService.editOne(this.userForm.value).subscribe({
           next: (data: IUsuario) => {
             this.oUsuario = data;
             this.initializeForm(this.oUsuario);

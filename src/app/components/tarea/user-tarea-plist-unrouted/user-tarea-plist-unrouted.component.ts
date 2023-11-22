@@ -26,8 +26,8 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
   @Output() tarea_change = new EventEmitter<Boolean>();
 
   oPage: ITareaPage | undefined;
-  oUser: IUsuario | null = null; // data of user if usuario_id is set for filter
-  oThread: IProyecto | null = null; // data of thread if proyecto_id is set for filter
+  oUsuario: IUsuario | null = null; // data of usuario if usuario_id is set for filter
+  oProyecto: IProyecto | null = null; // data of proyecto if proyecto_id is set for filter
   orderField: string = "id";
   orderDirection: string = "desc";
   oPaginatorState: PaginatorState = { first: 0, rows: 10, page: 0, pageCount: 0 };

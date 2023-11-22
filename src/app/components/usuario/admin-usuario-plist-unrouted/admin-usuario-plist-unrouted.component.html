@@ -42,12 +42,7 @@
             <span *ngIf="u.puesto==false">Admin</span>
           </td>
           <td class="text-center">
-            <a [routerLink]="['/admin','proyecto','plist','byusuario',u.id]" *ngIf="u.proyectos>0">{{u.proyectos}}</a>
-            <span *ngIf="u.proyectos==0">0</span>
-          </td>
-          <td class="text-center">
-            <a [routerLink]="['/admin','tarea','plist','byusuario',u.id]" *ngIf="u.tareas>0">{{u.tareas}}</a>
-            <span *ngIf="u.tareas==0">0</span>
+            <a>{{u.tareas}}</a>
           </td>
           <td class="text-center">
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
@@ -56,7 +51,7 @@
               <button class="btn btn-primary" (click)="doView(u)"><i class="pi pi-arrow-circle-up"></i></button>
               <button class="btn btn-warning" [routerLink]="['/admin','usuario','edit',u.id]"><i
                   class="pi pi-pencil"></i></button>
-              <button *ngIf="u.proyectos==0 && u.tareas==0" class="btn btn-danger" (click)="doRemove(u)"><i
+              <button *ngIf="u.tareas==0" class="btn btn-danger" (click)="doRemove(u)"><i
                   class="pi pi-trash"></i></button>
             </div>
           </td>

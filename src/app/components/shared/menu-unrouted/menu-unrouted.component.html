@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/home">App Tareas</a>
+        <a class="navbar-brand" href="/home">Phosphorum 2023</a>
         <div class="navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -10,21 +10,21 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [class.active]="strUrl.startsWith('/admin/usuario')"
-                        routerLink="/admin/usuario/plist" *ngIf="strUserName && oSessionUsuario?.puesto==false">Usuarios</a>
+                        routerLink="/admin/usuario/plist" *ngIf="strUserName && oSessionUser?.puesto==false">Usuarios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [class.active]="strUrl.startsWith('/admin/proyecto')"
-                        routerLink="/admin/proyecto/plist" *ngIf="strUserName && oSessionUsuario?.puesto==false">Proyectos</a>
+                        routerLink="/admin/proyecto/plist" *ngIf="strUserName && oSessionUser?.puesto==false">Proyectos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [class.active]="strUrl.startsWith('/admin/tarea')"
-                        routerLink="/admin/tarea/plist" *ngIf="strUserName && oSessionUsuario?.puesto==false">Tareas</a>
+                        routerLink="/admin/tarea/plist" *ngIf="strUserName && oSessionUser?.puesto==false">Tareas</a>
                 </li>
 
             </ul>
 
             <span class="navbar-text mx-1" *ngIf="strUserName">
-                <a class="nav-link" (click)="doSessionUsuarioView($event)" href="#">{{strUserName}}</a>
+                <a class="nav-link" (click)="doSessionUserView($event)" href="#">{{strUserName}}</a>
             </span>
             <span class="navbar-text mx-1" *ngIf="!strUserName">
                 Not logged in

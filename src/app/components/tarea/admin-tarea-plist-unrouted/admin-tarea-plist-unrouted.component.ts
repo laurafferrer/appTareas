@@ -60,7 +60,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
   }
 
   getPage(): void {
-    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.usuario_id, this.proyecto_id).subscribe({
+    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection).subscribe({
       next: (data: ITareaPage) => {
         this.oPage = data;
         this.oPaginatorState.pageCount = data.totalPages;

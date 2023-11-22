@@ -63,7 +63,7 @@ export class UserTareaFormUnroutedComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           this.status = error;
-          this.matSnackBar.open("Error reading reply from server.", '', { duration: 2000 });
+          this.matSnackBar.open("Error reading tarea from server.", '', { duration: 2000 });
         }
       });
     } else {
@@ -82,12 +82,12 @@ export class UserTareaFormUnroutedComponent implements OnInit {
           next: (data: ITarea) => {
             this.oTarea = { id: 0, nombre: '' };
             this.initializeForm(this.oTarea);
-            this.matSnackBar.open("Reply has been created.", '', { duration: 2000 });
+            this.matSnackBar.open("Tarea has been created.", '', { duration: 2000 });
             this.oDynamicDialogRef.close(data);            
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.matSnackBar.open("Can't create reply.", '', { duration: 2000 });
+            this.matSnackBar.open("Can't create tarea.", '', { duration: 2000 });
           }
         });
       } else {

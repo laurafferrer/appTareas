@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginatorState } from 'primeng/paginator';
-import { IProyecto, IProyectoPage, IUsuario } from 'src/app/model/model.interfaces';
+import { IProyecto, IProyectoPage, ITarea, IUsuario } from 'src/app/model/model.interfaces';
 import { AdminProyectoDetailUnroutedComponent } from '../admin-proyecto-detail-unrouted/admin-proyecto-detail-unrouted.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
@@ -20,15 +20,18 @@ export class AdminProyectoPlistUnroutedComponent implements OnInit {
 
   @Input() forceReload: Subject<boolean> = new Subject<boolean>();
   @Input() usuario_id: number = 0; //filter by usuario
+  @Input() tarea_id: number = 0; //filter by usuario
 
   oPage: IProyectoPage | undefined;
   oUsuario: IUsuario | null = null; // data of usuario if usuario_id is set for filter
+  oTarea: ITarea | null = null; // data of usuario if usuario_id is set for filter
   orderField: string = "id";
   orderDirection: string = "asc";
   oPaginatorState: PaginatorState = { first: 0, rows: 10, page: 0, pageCount: 0 };
   status: HttpErrorResponse | null = null;
   oProyectoToRemove: IProyecto | null = null;
   ref: DynamicDialogRef | undefined;
+  oTareaAjaxService: any;
 
   constructor(
     private oUsuarioAjaxService: UsuarioAjaxService,
@@ -118,6 +121,18 @@ export class AdminProyectoPlistUnroutedComponent implements OnInit {
     this.oUsuarioAjaxService.getOne(this.usuario_id).subscribe({
       next: (data: IUsuario) => {
         this.oUsuario = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.status = error;
+      }
+
+    })
+  }
+
+  getTarea(): void {
+    this.oTareaAjaxService.getOne(this.tarea_id).subscribe({
+      next: (data: ITarea) => {
+        this.oTarea = data;
       },
       error: (error: HttpErrorResponse) => {
         this.status = error;

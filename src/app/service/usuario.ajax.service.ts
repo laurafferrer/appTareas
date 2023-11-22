@@ -2,12 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUsuario, IUsuarioPage } from '../model/model.interfaces';
-import { API_URL } from 'src/environment/environment';
 
 @Injectable()
 export class UsuarioAjaxService {
 
-  sUrl: string = API_URL + "/usuario";
+  sUrl: string = "http://localhost:8085/usuario";
 
   constructor(
     private oHttpClient: HttpClient
@@ -19,7 +18,7 @@ export class UsuarioAjaxService {
 
   getByUsername(username: string): Observable<IUsuario> {
     return this.oHttpClient.get<IUsuario>(this.sUrl + "/byUsername/" + username);
-  }
+}
 
   getPage(size: number | undefined, page: number | undefined, orderField: string, orderDirection: string): Observable<IUsuarioPage> {
     if (!size) size = 10;
@@ -35,16 +34,16 @@ export class UsuarioAjaxService {
     }
   }
 
-  newOne(oUsuario: IUsuario): Observable<IUsuario> {
-    return this.oHttpClient.post<IUsuario>(this.sUrl, oUsuario);
+  editOne(usuario: IUsuario): Observable<IUsuario> {
+    return this.oHttpClient.put<IUsuario>(this.sUrl, usuario);
   }
 
-  updateOne(oUsuario: IUsuario): Observable<IUsuario> {
-    return this.oHttpClient.put<IUsuario>(this.sUrl, oUsuario);
+  create(usuario: IUsuario): Observable<IUsuario> {
+    return this.oHttpClient.post<IUsuario>(this.sUrl, usuario);
   }
 
-  generateRandom(amount: number): Observable<number> {
-    return this.oHttpClient.post<number>(this.sUrl + "/populate/" + amount, null);
+  empty(): Observable<number> {
+    return this.oHttpClient.delete<number>(this.sUrl + "/empty");
   }
 
   getPageByTareasNumberDesc(size: number | undefined, page: number | undefined): Observable<IUsuarioPage> {
@@ -53,8 +52,8 @@ export class UsuarioAjaxService {
     return this.oHttpClient.get<IUsuarioPage>(this.sUrl + "/byTareasNumberDesc?size=" + size + "&page=" + page);
   }
 
-  empty(): Observable<number> {
-    return this.oHttpClient.delete<number>(this.sUrl + "/empty");
+  generateRandom(amount: number): Observable<number> {
+    return this.oHttpClient.post<number>(this.sUrl + "/populate/" + amount, null);
   }
 
 }

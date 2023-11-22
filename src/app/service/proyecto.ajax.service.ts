@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_URL } from 'src/environment/environment';
 import { IProyecto, IProyectoPage } from '../model/model.interfaces';
 
 @Injectable()
 export class ProyectoAjaxService {
 
-  sUrl: string = API_URL + "/proyecto";
-
+  sUrl: string = "http://localhost:8085/proyecto";
   constructor(
     private oHttpCliente: HttpClient
   ) { }
@@ -17,30 +15,36 @@ export class ProyectoAjaxService {
     return this.oHttpCliente.get<IProyecto>(this.sUrl + "/" + id);
   }
 
-  getPage(size: number | undefined, page: number | undefined, orderField: string, orderDirection: string): Observable<IProyectoPage> {
-    if (!size) size = 10;
-    if (!page) page = 0;
-    return this.oHttpCliente.get<IProyectoPage>(this.sUrl + "?size=" + size + "&page=" + page + "&sort=" + orderField + "," + orderDirection);
+  create(proyecto: IProyecto): Observable<IProyecto> {
+    return this.oHttpCliente.post<IProyecto>(this.sUrl, proyecto);
+  }
+
+  update(proyecto: IProyecto): Observable<IProyecto> {
+      return this.oHttpCliente.put<IProyecto>(this.sUrl, proyecto);
   }
 
   removeOne(id: number | undefined): Observable<number> {
-    if (id) {
-      return this.oHttpCliente.delete<number>(this.sUrl + "/" + id);
-    } else {
-      return new Observable<number>();
+      if (id) {
+          return this.oHttpCliente.delete<number>(this.sUrl + "/" + id);
+      } else {
+          return new Observable<number>();
+      }
+  }
+
+  empty(): Observable<number> {
+    return this.oHttpCliente.delete<number>(this.sUrl + "/empty");
+  }
+
+  getPage(size: number | undefined, page: number | undefined, orderField: string, orderDirection: string, id_tarea: number): Observable<IProyectoPage> {
+    if (!size) size = 10;
+    if (!page) page = 0;
+  
+    let strUrlTarea = "";
+    if (id_tarea > 0) {
+        strUrlTarea = "&tarea=" + id_tarea;
     }
-  }
 
-  newOne(oProyecto: IProyecto) {
-    return this.oHttpCliente.post<IProyecto>(this.sUrl, oProyecto);
-  }
-
-  updateOne(oProyecto: IProyecto): Observable<IProyecto> {
-    return this.oHttpCliente.put<IProyecto>(this.sUrl, oProyecto);
-  }
-
-  generateRandom(amount: number): Observable<number> {
-    return this.oHttpCliente.post<number>(this.sUrl + "/populate/" + amount, null);
+    return this.oHttpCliente.get<IProyectoPage>(this.sUrl + "?size=" + size + "&page=" + page + "&sort=" + orderField + "," + orderDirection  + strUrlTarea);
   }
 
   getPageByTareasNumberDesc(size: number | undefined, page: number | undefined, id_usuario: number): Observable<IProyectoPage> {
@@ -53,8 +57,8 @@ export class ProyectoAjaxService {
     return this.oHttpCliente.get<IProyectoPage>(this.sUrl + "/byTareasNumberDesc?size=" + size + "&page?" + page + strUrlUsuario);
   }
 
-  empty(): Observable<number> {
-    return this.oHttpCliente.delete<number>(this.sUrl + "/empty");
+  generateRandom(amount: number): Observable<number> {
+    return this.oHttpCliente.post<number>(this.sUrl + "/populate/" + amount, null);
   }
 
 }

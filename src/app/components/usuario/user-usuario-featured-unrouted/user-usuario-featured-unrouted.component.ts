@@ -26,16 +26,6 @@ export class UserUsuarioFeaturedUnroutedComponent implements OnInit {
   }
 
   getPage(): void {
-    this.oUsuarioAjaxService.getPageByTareasNumberDesc(this.oPaginatorState.rows, this.oPaginatorState.page).subscribe({
-      next: (data: IUsuarioPage) => {
-        this.oPage = data;
-        this.oPaginatorState.pageCount = data.totalPages;
-        console.log(this.oPaginatorState);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.status = error;
-      }
-    })
   }
 
 }

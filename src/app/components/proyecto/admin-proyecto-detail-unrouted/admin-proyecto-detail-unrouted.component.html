@@ -30,14 +30,10 @@
                 <td> <a [routerLink]="['/admin','usuario','view',oProyecto.usuario.id]">{{oProyecto.usuario.nombre}}
                         {{oProyecto.usuario.apellidos}}</a></td>
             </tr>
-            <tr>
-                <th>tareas</th>
-                <td>
-                    <a [routerLink]="['/admin','tarea','plist','byproyecto',oProyecto.id]"
-                        *ngIf="oProyecto.tareas>0">{{oProyecto.tareas}}</a>
-                    <span *ngIf="oProyecto.tareas==0">0</span>
-                </td>
-            </tr>
+            <!--<tr>
+                <th>tarea</th>
+                <td> <a [routerLink]="['/admin','tarea','view',oProyecto.tarea.id]">{{oProyecto.tarea.nombre}}</a></td>
+            </tr>-->
         </tbody>
     </table>
 </div>

@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { API_URL } from 'src/environment/environment';
-import { IToken, SessionEvent } from '../model/model.interfaces';
+import { IToken, IUsuario, SessionEvent } from '../model/model.interfaces';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioAjaxService } from './usuario.ajax.service';
 
 @Injectable()
 export class SessionAjaxService {
 
-  sUrl: string = API_URL + "/session";
+  sUrl: string = "http://localhost:8085/session";
 
   subjectSession = new Subject<SessionEvent>();
 
@@ -76,6 +75,14 @@ export class SessionAjaxService {
 
   emit(event: SessionEvent) {
     this.subjectSession.next(event);
+  }
+
+  getSessionUser(): Observable<IUsuario> | null {
+    if (this.isSessionActive()) {
+      return this.oUsuarioAjaxService.getByUsername(this.getUsername())
+    } else {
+      return null;
+    }
   }
 
 }
