@@ -42,11 +42,11 @@
             <span *ngIf="u.puesto==false">Admin</span>
           </td>
           <td class="text-center">
-            <a [routerLink]="['/admin','proyecto','plist','byuser',u.id]" *ngIf="u.proyectos>0">{{u.proyectos}}</a>
+            <a [routerLink]="['/admin','proyecto','plist','byusuario',u.id]" *ngIf="u.proyectos>0">{{u.proyectos}}</a>
             <span *ngIf="u.proyectos==0">0</span>
           </td>
           <td class="text-center">
-            <a [routerLink]="['/admin','tarea','plist','byuser',u.id]" *ngIf="u.tareas>0">{{u.tareas}}</a>
+            <a [routerLink]="['/admin','tarea','plist','byusuario',u.id]" *ngIf="u.tareas>0">{{u.tareas}}</a>
             <span *ngIf="u.tareas==0">0</span>
           </td>
           <td class="text-center">

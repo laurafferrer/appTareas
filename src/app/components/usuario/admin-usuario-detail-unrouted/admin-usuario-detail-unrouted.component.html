@@ -39,7 +39,7 @@
           <tr>
               <th>proyectos</th>
               <td>
-                  <a [routerLink]="['/admin','proyecto','plist','byuser',oUsuario.id]"
+                  <a [routerLink]="['/admin','proyecto','plist','byusuario',oUsuario.id]"
                       *ngIf="oUsuario.proyectos>0">{{oUsuario.proyectos}}</a>
                   <span *ngIf="oUsuario.proyectos==0">0</span>
               </td>
@@ -47,7 +47,7 @@
           <tr>
               <th>tareas</th>
               <td>
-                  <a [routerLink]="['/admin','tarea','plist','byuser',oUsuario.id]"
+                  <a [routerLink]="['/admin','tarea','plist','byusuario',oUsuario.id]"
                       *ngIf="oUsuario.tareas>0">{{oUsuario.tareas}}</a>
                   <span *ngIf="oUsuario.tareas==0">0</span>
               </td>
