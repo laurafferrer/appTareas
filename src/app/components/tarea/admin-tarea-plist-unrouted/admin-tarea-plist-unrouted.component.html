@@ -31,11 +31,11 @@
           <td><strong>{{ t.id }}</strong></td>
           <td>{{ t.nombre}}</td>
           <td>
-            <a [routerLink]="['/admin','usuario','plist','byuser',t.usuario.id]">({{t.uuario.id}}) {{t.usuario.nombre}}
+            <a [routerLink]="['/admin','usuario','plist','byuser',t.usuario.id]">({{t.usuario.id}}) {{t.usuario.nombre}}
               {{t.usuario.apellidos}}</a>
           </td>
           <td class="text-center">
-            <a>{{ t.productos}}</a>
+            <a>{{ t.proyecto}}</a>
           </td>
           <td class="text-center">
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
@@ -44,7 +44,7 @@
               <button class="btn btn-success" (click)="doView(t)"><i class="pi pi-arrow-circle-up"></i></button>
               <button class="btn btn-warning" [routerLink]="['/admin','tarea','edit',t.id]"><i
                   class="pi pi-pencil"></i></button>
-              <button *ngIf="t.productos==0" class="btn btn-danger" (click)="doRemove(t)"><i
+              <button *ngIf="t.proyecto==0" class="btn btn-danger" (click)="doRemove(t)"><i
                   class="pi pi-trash"></i></button>
 
             </div>

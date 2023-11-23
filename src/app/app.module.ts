@@ -59,9 +59,7 @@ import { AdminProyectoDetailUnroutedComponent } from './components/proyecto/admi
 import { AdminProyectoPlistRoutedComponent } from './components/proyecto/admin-proyecto-plist-routed/admin-proyecto-plist-routed.component';
 import { AdminProyectoFormUnroutedComponent } from './components/proyecto/admin-proyecto-form-unrouted/admin-proyecto-form-unrouted.component';
 import { UserProyectoPlistUnroutedComponent } from './components/proyecto/user-proyecto-plist-unrouted/user-proyecto-plist-unrouted.component';
-import { AdminProyectoSelectionUnroutedComponent } from './components/proyecto/admin-proyecto-selection-unrouted/admin-proyecto-selection-unrouted.component';
 import { UserProyectoFeaturedUnroutedComponent } from './components/proyecto/user-proyecto-featured-unrouted/user-proyecto-featured-unrouted.component';
-import { UserProyectoFormUnroutedComponent } from './components/proyecto/user-proyecto-form-unrouted/user-proyecto-form-unrouted.component';
 //
 import { AdminTareaPlistUnroutedComponent } from './components/tarea/admin-tarea-plist-unrouted/admin-tarea-plist-unrouted.component';
 import { AdminTareaDetailUnroutedComponent } from './components/tarea/admin-tarea-detail-unrouted/admin-tarea-detail-unrouted.component';
@@ -71,8 +69,8 @@ import { AdminTareaViewRoutedComponent } from './components/tarea/admin-tarea-vi
 import { AdminTareaNewRoutedComponent } from './components/tarea/admin-tarea-new-routed/admin-tarea-new-routed.component';
 import { AdminTareaFormUnroutedComponent } from './components/tarea/admin-tarea-form-unrouted/admin-tarea-form-unrouted.component';
 import { UserTareaPlistUnroutedComponent } from './components/tarea/user-tarea-plist-unrouted/user-tarea-plist-unrouted.component';
-import { UserTareaDetailUnroutedComponent } from './components/tarea/user-tarea-detail-unrouted/user-tarea-detail-unrouted.component';
-import { UserTareaFormUnroutedComponent } from './components/tarea/user-tarea-form-unrouted/user-tarea-form-unrouted.component';
+import { UserTareaFeaturedUnroutedComponent } from './components/tarea/user-tarea-featured-unrouted/user-tarea-featured-unrouted.component';
+import { AdminTareaSelectionUnroutedComponent } from './components/tarea/admin-tarea-selection-unrouted/admin-tarea-selection-unrouted.component';
 
 
 //--
@@ -105,10 +103,8 @@ import { UserTareaFormUnroutedComponent } from './components/tarea/user-tarea-fo
     AdminProyectoPlistUnroutedComponent,
     AdminProyectoDetailUnroutedComponent,
     AdminProyectoFormUnroutedComponent,
-    AdminProyectoSelectionUnroutedComponent,
     UserProyectoFeaturedUnroutedComponent,
     UserProyectoPlistUnroutedComponent,
-    UserProyectoFormUnroutedComponent,
     //--
     AdminTareaPlistRoutedComponent,
     AdminTareaViewRoutedComponent,
@@ -117,9 +113,9 @@ import { UserTareaFormUnroutedComponent } from './components/tarea/user-tarea-fo
     AdminTareaPlistUnroutedComponent,
     AdminTareaDetailUnroutedComponent,
     AdminTareaFormUnroutedComponent,
+    AdminTareaSelectionUnroutedComponent,
+    UserTareaFeaturedUnroutedComponent,
     UserTareaPlistUnroutedComponent,
-    UserTareaDetailUnroutedComponent,
-    UserTareaFormUnroutedComponent,
     //--    
   ],
   imports: [

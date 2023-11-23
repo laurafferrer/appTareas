@@ -58,7 +58,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           this.status = error;
-          this.oMatSnackBar.open("Error reading Pedido from server.", '', { duration: 1200 });
+          this.matSnackBar.open("Error reading Pedido from server.", '', { duration: 1200 });
         }
       });
     } else {
@@ -85,12 +85,12 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
          
             this.initializeForm(this.oTarea); 
             console.log(this.oTarea)
-            this.oMatSnackBar.open('tarea has been created.', '', { duration: 1200 });
+            this.matSnackBar.open('tarea has been created.', '', { duration: 1200 });
             this.router.navigate(['/admin', 'tarea', 'view',  this.oTarea]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.oMatSnackBar.open('Failed to create tarea.', '', { duration: 1200 });
+            this.matSnackBar.open('Failed to create tarea.', '', { duration: 1200 });
           }
         });
       } else {
@@ -98,12 +98,12 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
           next: (data: ITarea) => {
             this.oTarea = data;
             this.initializeForm(this.oTarea);
-            this.oMatSnackBar.open('tarea has been updated.', '', { duration: 1200 });
+            this.matSnackBar.open('tarea has been updated.', '', { duration: 1200 });
             this.router.navigate(['/admin', 'tarea', 'view', this.oTarea.id]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.oMatSnackBar.open('Failed to update tarea.', '', { duration: 1200 });
+            this.matSnackBar.open('Failed to update tarea.', '', { duration: 1200 });
           }
         });
       }
