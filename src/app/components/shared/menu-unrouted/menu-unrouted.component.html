@@ -19,31 +19,31 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" [class.active]="strUrl.startsWith('/admin/usuario')" routerLink="/admin/usuario/plist"
-                *ngIf="strUserName && oSessionUser?.puesto==false">Usuarios</a>
+                *ngIf="strUsername && oSessionUsuario?.puesto==false">Usuarios</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" [class.active]="strUrl.startsWith('/admin/tarea')" routerLink="/admin/tarea/plist"
-                *ngIf="strUserName && oSessionUser?.puesto==false">Tareas</a>
+                *ngIf="strUsername && oSessionUsuario?.puesto==false">Tareas</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" [class.active]="strUrl.startsWith('/admin/proyecto')" routerLink="/admin/proyecto/plist"
-                *ngIf="strUserName && oSessionUser?.puesto==false">Proyectos</a>
+                *ngIf="strUsername && oSessionUsuario?.puesto==false">Proyectos</a>
             </li>
   
           </ul>
      
           <div class="ms-auto d-flex">
-            <span class="navbar-text mx-1" *ngIf="strUserName">
-                <a class="nav-link" (click)="doSessionUserView($event)" href="#">{{strUserName}}</a>
+            <span class="navbar-text mx-1" *ngIf="strUsername">
+                <a class="nav-link" (click)="doSesionUsuarioView($event)" href="#">{{strUsername}}</a>
             </span>
-            <span class="navbar-text mx-1" *ngIf="!strUserName">
+            <span class="navbar-text mx-1" *ngIf="!strUsername">
                 No logueado
             </span>
             <span class="navbar-text mx-1">
-                <a class="nav-link" routerLink="/login" href="#" *ngIf="!strUserName" [class.active]="strUrl.startsWith('/login')">Login</a>
+                <a class="nav-link" routerLink="/login" href="#" *ngIf="!strUsername" [class.active]="strUrl.startsWith('/login')">Login</a>
             </span>
             <span class="navbar-text mx-1">
-                <a class="nav-link" routerLink="/logout" href="#" *ngIf="strUserName" [class.active]="strUrl.startsWith('/logout')">Logout</a>
+                <a class="nav-link" routerLink="/logout" href="#" *ngIf="strUsername" [class.active]="strUrl.startsWith('/logout')">Logout</a>
             </span>
         
         </div>

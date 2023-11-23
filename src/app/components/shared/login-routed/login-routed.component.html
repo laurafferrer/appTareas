@@ -6,19 +6,19 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <div class="login-form">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <mat-form-field class="full-width">
       <input matInput placeholder="Username" formControlName="username">
-      <mat-error *ngIf="loginForm.get('username')?.hasError('required')">Username is required</mat-error>
+      <mat-error *ngIf="loginForm.get('username')?.hasError('required')">Introduce el username</mat-error>
     </mat-form-field>
 
     <mat-form-field class="full-width">
       <input matInput type="password" placeholder="Password" formControlName="password">
-      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
-      <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 6 characters length</mat-error>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Introduce la contraseña</mat-error>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">La contraseña debe tener al menos 6 carácteres</mat-error>
     </mat-form-field>
     <div class="control-group text-center">
     <button class="mx-1" mat-raised-button type="submit" color="primary">Iniciar sesión</button>
@@ -30,11 +30,12 @@
     <div class="card">
       <div class="card-body">
         <div class="control-group text-center mt-3">
-          <button class="btn btn-danger m-2" (click)="loginAdmin()">log in as admin</button>
-          <button class="btn btn-success m-2" (click)="loginUsuario()">log in as usuario</button>
+          <button class="btn btn-danger m-2" (click)="loginAdmin()">Soy admin</button>
+          <button class="btn btn-success m-2" (click)="loginUser()">Soy usuario</button>
         </div>
       </div>
     </div>
   </div>
-  
+
+</div>
 </div>

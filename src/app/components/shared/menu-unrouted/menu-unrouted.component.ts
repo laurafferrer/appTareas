@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IUsuario, SessionEvent } from 'src/app/model/model.interfaces';
 import { SessionAjaxService } from 'src/app/service/session.ajax.service';
 import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
 import { UserUsuarioDetailUnroutedComponent } from '../../usuario/user-usuario-detail-unrouted/user-usuario-detail-unrouted.component';
-import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-unrouted',
@@ -14,28 +14,27 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class MenuUnroutedComponent implements OnInit {
 
-  strUserName: string = "";
-  oSessionUser: IUsuario | null = null;
+  strUsername: string = "";
+  oSessionUsuario: IUsuario | null = null;
   strUrl: string = "";
 
   constructor(
     private oSessionService: SessionAjaxService,
-    public oDialogService: DialogService,
     private oUsuarioAjaxService: UsuarioAjaxService,
+    private oDialogService: DialogService,
     private oRouter: Router
-  ) {
-    
+  ) { 
+
     this.oRouter.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         this.strUrl = ev.url;
       }
     })
-    
-    this.strUserName = oSessionService.getUsername();
-
+      
+    this.strUsername = oSessionService.getUsername();
     this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
       next: (oUsuario: IUsuario) => {
-        this.oSessionUser = oUsuario;
+        this.oSessionUsuario = oUsuario;
       },
       error: (error: HttpErrorResponse) => {
         console.log(error);
@@ -46,48 +45,40 @@ export class MenuUnroutedComponent implements OnInit {
   ngOnInit() {
     this.oSessionService.on().subscribe({
       next: (data: SessionEvent) => {
-        console.log(data);
-        console.log(this.strUserName);
-     
         if (data.type == 'login') {
-          console.log(data);
-          this.strUserName =  this.oSessionService.getUsername();
-          console.log(this.strUserName);
+          this.strUsername = this.oSessionService.getUsername();
           this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
-           
-            next: (oUser: IUsuario) => {
-              this.oSessionUser = oUser;
+            next: (oUsuario: IUsuario) => {
+              this.oSessionUsuario = oUsuario;
             },
             error: (error: HttpErrorResponse) => {
               console.log(error);
             }
-          });
+          })
         }
         if (data.type == 'logout') {
-          this.strUserName = "";
+          this.strUsername = "";
         }
       }
     });
   }
 
-  doSessionUserView($event: Event) {
-    if (this.oSessionUser) {
+  doSesionUsuarioView($event: Event) {
+    if (this.oSessionUsuario) {
       let ref: DynamicDialogRef | undefined;
       ref = this.oDialogService.open(UserUsuarioDetailUnroutedComponent, {
         data: {
-          id: this.oSessionUser.id
-        },
-        header: 'View of usuario',
-        width: '50%',
-        contentStyle: { overflow: 'auto' },
-        baseZIndex: 10000,
-        maximizable: false
-      });
-    }
-    return false;
-    //$event.preventDefault
+          id: this.oSessionUsuario.id
+      },
+    header: 'Detalle de usuario',
+    width: '70%',
+    contentStyle: {"overflow": "auto"},
+    baseZIndex: 10000,
+    maximizable: false
+    });
   }
+  return false;
 
 }
 
-
+}

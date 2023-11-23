@@ -11,9 +11,7 @@ import { SessionAjaxService } from 'src/app/service/session.ajax.service';
   templateUrl: './login-routed.component.html',
   styleUrls: ['./login-routed.component.css']
 })
-
 export class LoginRoutedComponent implements OnInit {
-
   loginForm: FormGroup;
   status: HttpErrorResponse | null = null;
 
@@ -23,7 +21,7 @@ export class LoginRoutedComponent implements OnInit {
     private oMatSnackBar: MatSnackBar,
     private oRouter: Router,
     private oCryptoService: CryptoService
-  ) {
+  ) { 
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -31,6 +29,7 @@ export class LoginRoutedComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   onSubmit() {
@@ -39,18 +38,14 @@ export class LoginRoutedComponent implements OnInit {
         next: (data: string) => {
           this.oSessionService.setToken(data);
           this.oSessionService.emit({ type: 'login' });
-          this.oMatSnackBar.open("Login successful.", '', { duration: 2000 });
-          if (this.loginForm.value.username === 'Kirachan') {
-            this.oRouter.navigate(['/home']); 
-          } else {
-            this.oRouter.navigate(['/userhome']); 
-          }
+          this.oMatSnackBar.open("Login realizado con éxito.", '', { duration: 2000 });
+          this.oRouter.navigate(['/home']);
         },
         error: (error: HttpErrorResponse) => {
           this.status = error;
-          this.oMatSnackBar.open("Error in login operation.", '', { duration: 2000 });
+          this.oMatSnackBar.open("Error al hacer login", '', { duration: 2000});
         }
-      });
+      })
     }
   }
 
@@ -65,7 +60,7 @@ export class LoginRoutedComponent implements OnInit {
     })
   }
 
-  loginUsuario() {
+  loginUser() {
     this.loginForm.setValue({
       username: 'pedro',
       password: 'foxforum'
