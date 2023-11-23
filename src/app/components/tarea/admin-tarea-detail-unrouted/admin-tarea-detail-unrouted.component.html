@@ -21,6 +21,21 @@
                 <th>nombre</th>
                 <td>{{oTarea.nombre}}</td>
             </tr>
+            <tr>
+                <td>Usuario</td>
+                <td>
+                  <a [routerLink]="['/admin', 'usuario', 'view', oTarea.usuario.id]"> {{ oTarea.usuario.nombre }} {{ oTarea.usuario.apellidos
+                    }}</a>
+                </td>
+              </tr>
+              <tr>
+                <td>Proyectos</td>
+                <td>
+                  <a [routerLink]="['/admin','proyecto','plist','byproyecto']" *ngIf="oTarea.proyecto > 0">{{
+                    oTarea.proyecto }}</a>
+                  <span *ngIf="oTarea.proeycto === 0">0</span>
+                </td>
+              </tr>
         </tbody>
     </table>
 </div>

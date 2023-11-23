@@ -1,14 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-
-interface ITarea {
-  id:number;
-  nombre:string;
-  usuario_id:number;
-  proyecto_id:number;
-}
-
 @Component({
   selector: 'app-admin-tarea-view-routed',
   templateUrl: './admin-tarea-view-routed.component.html',

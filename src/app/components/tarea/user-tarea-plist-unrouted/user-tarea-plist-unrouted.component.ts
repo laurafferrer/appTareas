@@ -10,9 +10,6 @@ import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
 import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
 import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
 import { SessionAjaxService } from 'src/app/service/session.ajax.service';
-import { UserProyectoFormUnroutedComponent } from '../../proyecto/user-proyecto-form-unrouted/user-proyecto-form-unrouted.component';
-import { UserTareaFormUnroutedComponent } from '../user-tarea-form-unrouted/user-tarea-form-unrouted.component';
-
 
 @Component({
   providers: [ConfirmationService],
@@ -22,8 +19,11 @@ import { UserTareaFormUnroutedComponent } from '../user-tarea-form-unrouted/user
 })
 
 export class UserTareaPlistUnroutedComponent implements OnInit {
+  @Input() id_usuario: number = 0; //filter by user
+  @Output() tarea_selection = new EventEmitter<ITarea>();
 
-  @Output() tarea_change = new EventEmitter<Boolean>();
+  activeOrder: boolean = true; //true=new false=popular always desc
+  activeTarea: ITarea | null = null;
 
   oPage: ITareaPage | undefined;
   oUsuario: IUsuario | null = null; // data of usuario if usuario_id is set for filter
@@ -45,15 +45,25 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPage();
+    if (this.activeOrder) {
+      this.getPage();
+    } else {
+      this.getPageByTareasNumberDesc();
+    }
+    if (this.id_usuario > 0) {
+      this.getUsuario();
+    }
   }
 
   getPage(): void {
-    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection).subscribe({
+    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.id_usuario).subscribe({
       next: (data: ITareaPage) => {
         this.oPage = data;
+        if (this.oPage.content.length > 0) {
+          this.activeTarea = this.oPage.content[0];
+          this.tarea_selection.emit(this.activeTarea);
+        }
         this.oPaginatorState.pageCount = data.totalPages;
-        console.log(this.oPaginatorState);
       },
       error: (error: HttpErrorResponse) => {
         this.status = error;
@@ -64,64 +74,54 @@ export class UserTareaPlistUnroutedComponent implements OnInit {
   onPageChang(event: PaginatorState) {
     this.oPaginatorState.rows = event.rows;
     this.oPaginatorState.page = event.page;
-    this.getPage();
-  }
-
-  ref: DynamicDialogRef | undefined;
-
-  doView(u: ITarea) {
-    this.ref = this.oDialogService.open(AdminTareaDetailUnroutedComponent, {
-      data: {
-        id: u.id
-      },
-      header: 'View of tarea',
-      width: '50%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      maximizable: false
-    });
-  }
-
-  doRemove(u: ITarea) {
-    this.oTareaToRemove = u;
-    this.oConfirmationService.confirm({
-      accept: () => {
-        this.oMatSnackBar.open("The tarea has been removed.", '', { duration: 2000 });
-        this.oTareaAjaxService.removeOne(this.oTareaToRemove?.id).subscribe({
-          next: () => {
-            this.getPage();
-            this.tarea_change.emit(true);
-          },
-          error: (error: HttpErrorResponse) => {
-            this.status = error;
-            this.oMatSnackBar.open("The tarea hasn't been removed.", "", { duration: 2000 });
-          }
-        });
-      },
-      reject: (type: ConfirmEventType) => {
-        this.oMatSnackBar.open("The tarea hasn't been removed.", "", { duration: 2000 });
-      }
-    });
-  }
-
-  postNewTarea(): void {
-    if ( this.oSessionService.isSessionActive()) {
-
-      this.ref = this.oDialogService.open(UserTareaFormUnroutedComponent, {
-        data: {
-        },
-        header: 'Post a new tarea',
-        width: '70%',
-        contentStyle: { overflow: 'auto' },
-        baseZIndex: 10000,
-        maximizable: false
-      });
-
-      this.ref.onClose.subscribe((nTarea: number) => {
-        this.getPage();
-        this.tarea_change.emit(true);
-      });
+    if (this.activeOrder) {
+      this.getPage();
+    } else {
+      this.getPageByTareasNumberDesc();
     }
+  }
+
+  getUsuario(): void {
+    this.oUsuarioAjaxService.getOne(this.id_usuario).subscribe({
+      next: (data: IUsuario) => {
+        this.oUsuario = data;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.status = error;
+      }
+
+    })
+  }
+
+  doShowReplies(oTarea: ITarea) {
+    this.tarea_selection.emit(oTarea);
+    this.activeTarea = oTarea;
+    return false;
+  }
+
+
+  onOrderChange(event: any) {
+    this.activeOrder = !this.activeOrder;
+    this.orderDirection = "desc";
+    if (this.activeOrder) {
+      this.getPage();
+    } else {
+      this.getPageByTareasNumberDesc();
+    }
+  }
+
+  getPageByTareasNumberDesc(): void {
+    this.oTareaAjaxService.getPageByTareasNumberDesc(this.oPaginatorState.rows, this.oPaginatorState.page, 0).subscribe({
+      next: (data: ITareaPage) => {
+        this.oPage = data;
+        this.oPaginatorState.pageCount = data.totalPages;
+        this.activeTarea = this.oPage.content[0];
+        this.tarea_selection.emit(this.activeTarea);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.status = error;
+      }
+    })
   }
 
 }

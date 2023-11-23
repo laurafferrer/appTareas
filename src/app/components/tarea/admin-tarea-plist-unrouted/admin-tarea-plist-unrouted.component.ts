@@ -1,15 +1,15 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginatorState } from 'primeng/paginator';
-import { ITarea, ITareaPage, IProyecto, IUsuario } from 'src/app/model/model.interfaces';
-import { AdminTareaDetailUnroutedComponent } from '../admin-tarea-detail-unrouted/admin-tarea-detail-unrouted.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ITarea, ITareaPage, IUsuario } from 'src/app/model/model.interfaces';
 import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
-import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
-import { ProyectoAjaxService } from 'src/app/service/proyecto.ajax.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AdminTareaDetailUnroutedComponent } from '../admin-tarea-detail-unrouted/admin-tarea-detail-unrouted.component';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { UsuarioAjaxService } from 'src/app/service/usuario.ajax.service';
 
 @Component({
   providers: [ConfirmationService],
@@ -17,38 +17,35 @@ import { Subject } from 'rxjs';
   templateUrl: './admin-tarea-plist-unrouted.component.html',
   styleUrls: ['./admin-tarea-plist-unrouted.component.css']
 })
-
 export class AdminTareaPlistUnroutedComponent implements OnInit {
 
   @Input() forceReload: Subject<boolean> = new Subject<boolean>();
-  @Input() usuario_id: number = 0; //filter by usuario
-  @Input() proyecto_id: number = 0; //filter by proyecto
+  @Input() id_usuario: number = 0;
 
   oPage: ITareaPage | undefined;
-  oUsuario: IUsuario | null = null; // data of usuario if id_usuario is set for filter
-  oProyecto: IProyecto | null = null; // data of proyecto if id_proyecto is set for filter
+  oUsuario: IUsuario | null = null;
   orderField: string = "id";
   orderDirection: string = "asc";
   oPaginatorState: PaginatorState = { first: 0, rows: 10, page: 0, pageCount: 0 };
   status: HttpErrorResponse | null = null;
   oTareaToRemove: ITarea | null = null;
+  ref: DynamicDialogRef | undefined;
 
   constructor(
-    private oUsuarioAjaxService: UsuarioAjaxService,
-    private oProyectoAjaxService: ProyectoAjaxService,
-    private oTareaAjaxService: TareaAjaxService,
     public oDialogService: DialogService,
-    private oCconfirmationService: ConfirmationService,
-    private oMatSnackBar: MatSnackBar
+    private oConfirmationService: ConfirmationService,
+    private oMatSnackBar: MatSnackBar,
+    private oTareaAjaxService: TareaAjaxService,
+    private oUsuarioAjaxService: UsuarioAjaxService
+
+
+
   ) { }
 
   ngOnInit() {
     this.getPage();
-    if (this.usuario_id > 0) {
+    if (this.id_usuario > 0) {
       this.getUsuario();
-    }
-    if (this.proyecto_id > 0) {
-      this.getProyecto();
     }
     this.forceReload.subscribe({
       next: (v) => {
@@ -60,16 +57,19 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
   }
 
   getPage(): void {
-    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection).subscribe({
+    this.oTareaAjaxService.getPage(this.oPaginatorState.rows, this.oPaginatorState.page, this.orderField, this.orderDirection, this.id_usuario).subscribe({
+
       next: (data: ITareaPage) => {
+        console.log(this.id_usuario);
         this.oPage = data;
         this.oPaginatorState.pageCount = data.totalPages;
         console.log(this.oPaginatorState);
       },
       error: (error: HttpErrorResponse) => {
         this.status = error;
+        this.oMatSnackBar.open("Error reading tarea from server.", '', { duration: 1200 });
       }
-    })
+    });
   }
 
   onPageChang(event: PaginatorState) {
@@ -89,12 +89,11 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
   }
 
   doView(u: ITarea) {
-    let ref: DynamicDialogRef | undefined;
-    ref = this.oDialogService.open(AdminTareaDetailUnroutedComponent, {
+    this.ref = this.oDialogService.open(AdminTareaDetailUnroutedComponent, {
       data: {
         id: u.id
       },
-      header: 'View of tarea',
+      header: 'Vista de tarea',
       width: '50%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -102,29 +101,42 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
     });
   }
 
+
   doRemove(u: ITarea) {
     this.oTareaToRemove = u;
-    this.oCconfirmationService.confirm({
+    this.oConfirmationService.confirm({
       accept: () => {
-        this.oMatSnackBar.open("The tarea has been removed.", '', { duration: 2000 });
-        this.oTareaAjaxService.removeOne(this.oTareaToRemove?.id).subscribe({
-          next: () => {
-            this.getPage();
-          },
-          error: (error: HttpErrorResponse) => {
-            this.status = error;
-            this.oMatSnackBar.open("The tarea hasn't been removed.", "", { duration: 2000 });
-          }
-        });
+        if (this.oTareaToRemove) {
+          this.oMatSnackBar.open('The producto has been removed.', '', {
+            duration: 1200
+          });
+          this.oTareaAjaxService
+            .removeOne(this.oTareaToRemove.id)
+            .subscribe({
+              next: () => {
+                this.getPage();
+              },
+              error: (error: HttpErrorResponse) => {
+                this.status = error;
+                this.oMatSnackBar.open(
+                  "The producto hasn't been removed.",
+                  '',
+                  { duration: 1200 }
+                );
+              }
+            });
+        }
       },
       reject: (type: ConfirmEventType) => {
-        this.oMatSnackBar.open("The tarea hasn't been removed.", "", { duration: 2000 });
+        this.oMatSnackBar.open(
+          "The producto hasn't been removed.",
+          '',
+          { duration: 1200 });
       }
     });
   }
-
   getUsuario(): void {
-    this.oUsuarioAjaxService.getOne(this.usuario_id).subscribe({
+    this.oUsuarioAjaxService.getOne(this.id_usuario).subscribe({
       next: (data: IUsuario) => {
         this.oUsuario = data;
       },
@@ -134,18 +146,4 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
 
     })
   }
-
-  getProyecto(): void {
-    this.oProyectoAjaxService.getOne(this.proyecto_id).subscribe({
-      next: (data: IProyecto) => {
-        this.oProyecto = data;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.status = error;
-      }
-
-    })
-  }
-
-
 }

@@ -23,6 +23,7 @@
                 <a class="btn btn-danger mx-1" (click)="doEmpty($event)">Empty</a>
             </div>
         </div>
+        <app-admin-tarea-plist-unrouted [forceReload]="forceReload" [id_usuario]="id_usuario" *ngIf="!bLoading"></app-admin-tarea-plist-unrouted>
     </div>
 </div>
 

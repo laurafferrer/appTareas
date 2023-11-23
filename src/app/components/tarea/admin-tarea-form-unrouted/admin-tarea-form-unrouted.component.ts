@@ -4,10 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ITarea, IProyecto, IUsuario, formOperation } from 'src/app/model/model.interfaces';
+import { ITarea, IUsuario, formOperation } from 'src/app/model/model.interfaces';
 import { TareaAjaxService } from 'src/app/service/tarea.ajax.service';
 import { AdminUsuarioSelectionUnroutedComponent } from '../../usuario/admin-usuario-selection-unrouted/admin-usuario-selection-unrouted.component';
-import { AdminProyectoSelectionUnroutedComponent } from '../../proyecto/admin-proyecto-selection-unrouted/admin-proyecto-selection-unrouted.component';
 
 @Component({
   selector: 'app-admin-tarea-form-unrouted',
@@ -21,7 +20,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
   @Input() operation: formOperation = 'NEW'; // new or edit
 
   tareaForm!: FormGroup;
-  oTarea: ITarea = { id: 0, nombre: '' };
+  oTarea: ITarea = { usuario: {} } as ITarea;
   status: HttpErrorResponse | null = null;
 
   oDynamicDialogRef: DynamicDialogRef | undefined;
@@ -37,22 +36,29 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
   }
 
   initializeForm(oTarea: ITarea) {
+    const userID = oTarea.usuario ? oTarea.usuario.id : null;
     this.tareaForm = this.formBuilder.group({
       id: [oTarea.id],
-      nombre: [oTarea.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      nombre: [oTarea.nombre],
+      usuario: this.formBuilder.group({
+        id: [userID]
+      })
     });
   }
 
+
   ngOnInit() {
     if (this.operation == 'EDIT') {
+    console.log(this.operation)
       this.oTareaAjaxService.getOne(this.id).subscribe({
         next: (data: ITarea) => {
+          console.log(data)
           this.oTarea = data;
           this.initializeForm(this.oTarea);
         },
         error: (error: HttpErrorResponse) => {
           this.status = error;
-          this.matSnackBar.open("Error reading tarea from server.", '', { duration: 2000 });
+          this.oMatSnackBar.open("Error reading Pedido from server.", '', { duration: 1200 });
         }
       });
     } else {
@@ -64,36 +70,61 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
     return this.tareaForm.controls[controlName].hasError(errorName);
   }
 
+
+
   onSubmit() {
+
     if (this.tareaForm.valid) {
+
       if (this.operation == 'NEW') {
-        this.oTareaAjaxService.newOne(this.tareaForm.value).subscribe({
+        console.log(this.operation)
+        this.oTareaAjaxService.create(this.tareaForm.value).subscribe({
           next: (data: ITarea) => {
-            this.oTarea = { id: 0, nombre: '' };
-            this.initializeForm(this.oTarea);
-            this.matSnackBar.open("Tarea has been created.", '', { duration: 2000 });
-            this.router.navigate(['/admin', 'tarea', 'view', data]);
+        
+           this.oTarea = data;
+         
+            this.initializeForm(this.oTarea); 
+            console.log(this.oTarea)
+            this.oMatSnackBar.open('tarea has been created.', '', { duration: 1200 });
+            this.router.navigate(['/admin', 'tarea', 'view',  this.oTarea]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.matSnackBar.open("Can't create tarea.", '', { duration: 2000 });
+            this.oMatSnackBar.open('Failed to create tarea.', '', { duration: 1200 });
           }
         });
       } else {
-        this.oTareaAjaxService.updateOne(this.tareaForm.value).subscribe({
+        this.oTareaAjaxService.update(this.tareaForm.value).subscribe({
           next: (data: ITarea) => {
             this.oTarea = data;
             this.initializeForm(this.oTarea);
-            this.matSnackBar.open("Tarea has been updated.", '', { duration: 2000 });
+            this.oMatSnackBar.open('tarea has been updated.', '', { duration: 1200 });
             this.router.navigate(['/admin', 'tarea', 'view', this.oTarea.id]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.matSnackBar.open("Can't update tarea.", '', { duration: 2000 });
+            this.oMatSnackBar.open('Failed to update tarea.', '', { duration: 1200 });
           }
         });
       }
     }
   }
 
+  onShowUsuariosSelection() {
+    this.oDynamicDialogRef = this.oDialogService.open(AdminUsuarioSelectionUnroutedComponent, {
+      header: 'Select a usuario',
+      width: '85%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+
+    this.oDynamicDialogRef.onClose.subscribe((oUsuario: IUsuario) => {
+      if (oUsuario) {
+        console.log(oUsuario);
+        this.oTarea.usuario = oUsuario;
+        this.tareaForm.controls['usuario'].patchValue({ id: oUsuario.id });
+      }
+    });
+  }
 }

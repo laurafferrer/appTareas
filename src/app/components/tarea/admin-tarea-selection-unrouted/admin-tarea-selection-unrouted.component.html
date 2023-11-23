@@ -1,4 +1,4 @@
-<div *ngIf="status!=null">
+<div *ngIf="status != null">
   <div class="d-flex justify-content-center my-3">
     <div class="alert alert-danger" role="alert">
       {{status!.error.message}} - {{status!.message}}
@@ -8,45 +8,34 @@
 
 <div *ngIf="status==null">
   <div class="d-flex justify-content-between mb-3">
-    <h3>Mostrando {{oPage?.numberOfElements}} de {{oPage?.totalElements}} productos.</h3>
+ 
+    <h3>Mostrando {{oPage?.numberOfElements}} de {{oPage?.totalElements}} tareas.</h3>
   </div>
   <div class="flex justify-content-center mb-3">
-    <p-paginator (onPageChange)="onPageChang($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
       [totalRecords]="oPage?.totalElements || 0" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
   </div>
-
   <div class="mb-5">
-    <table class="table table-bordered table-striped table-hover table-sm text-center align-middle">
+    <table  class="table table-bordered table-striped table-hover table-sm text-center align-middle">
       <thead>
         <tr>
           <th (click)="doOrder('id')">ID</th>
           <th (click)="doOrder('nombre')">Nombre</th>
-          <th (click)="doOrder('id_usuario')">Usuario</th>
-          <th>Productos</th>
+          <th (click)="doOrder('user')">Usuario</th>
+          <th>Numero de tareas</th>
           <th>Herramientas</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let t of oPage?.content" class="text-center align-middle">
-          <td><strong>{{ t.id }}</strong></td>
-          <td>{{ t.nombre}}</td>
-          <td>
-            <a [routerLink]="['/admin','usuario','plist','byuser',t.usuario.id]">({{t.uuario.id}}) {{t.usuario.nombre}}
-              {{t.usuario.apellidos}}</a>
-          </td>
-          <td class="text-center">
-            <a>{{ t.productos}}</a>
-          </td>
+        <tr *ngFor="let tarea of oPage?.content" class="text-center align-middle">
+          <td ><strong>{{ tarea.id }}</strong></td>
+          <td>{{ tarea.nombre }}</td>
+          <td>{{ tarea.user.nombre }} {{ tarea.user.apellidos }}</td>
+          <td>{{ tarea.proyectos}} </td>
+
           <td class="text-center">
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-              <button class="btn btn-primary" [routerLink]="['/admin','tarea','view',t.id]"><i
-                  class="pi pi-eye"></i></button>
-              <button class="btn btn-success" (click)="doView(t)"><i class="pi pi-arrow-circle-up"></i></button>
-              <button class="btn btn-warning" [routerLink]="['/admin','tarea','edit',t.id]"><i
-                  class="pi pi-pencil"></i></button>
-              <button *ngIf="t.productos==0" class="btn btn-danger" (click)="doRemove(t)"><i
-                  class="pi pi-trash"></i></button>
-
+              <button class="btn btn-primary" (click)="onSelectTarea(tarea)"><i class="pi pi-plus-circle"></i></button>
             </div>
           </td>
         </tr>

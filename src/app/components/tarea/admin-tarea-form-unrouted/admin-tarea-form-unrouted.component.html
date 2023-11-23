@@ -20,6 +20,16 @@
             <mat-error *ngIf="hasError('nombre', 'maxlength')">Exceeds characters limit</mat-error>
           </mat-form-field>
         </div>
+        <div formGroupName="user">
+          <div class="form-group">
+            <mat-form-field [style.width.px]=350>
+              <mat-label>Usuario:</mat-label>
+              <input matInput formControlName="id" placeholder="usuario" required readonly>
+            </mat-form-field>
+          </div>
+          <button class="btn btn-primary" type="button" (click)="onShowUsuariosSelection()"> <i class="pi pi-search"></i>
+            Buscar usuario</button>
+        </div>
         <div class="text-center mt-5">
           <button mat-raised-button color="primary" type="submit" [disabled]="!tareaForm.valid">Save tarea</button>
         </div>
