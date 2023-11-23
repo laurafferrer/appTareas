@@ -6,7 +6,7 @@ import { IProyecto, IProyectoPage } from '../model/model.interfaces';
 @Injectable()
 export class ProyectoAjaxService {
 
-  sUrl: string = "http://localhost:8085/proyecto";
+  sUrl: string = "http://localhost:8083/proyecto";
   constructor(
     private oHttpCliente: HttpClient
   ) { }

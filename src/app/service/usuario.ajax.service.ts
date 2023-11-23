@@ -6,7 +6,7 @@ import { IUsuario, IUsuarioPage } from '../model/model.interfaces';
 @Injectable()
 export class UsuarioAjaxService {
 
-  sUrl: string = "http://localhost:8085/usuario";
+  sUrl: string = "http://localhost:8083/usuario";
 
   constructor(
     private oHttpClient: HttpClient

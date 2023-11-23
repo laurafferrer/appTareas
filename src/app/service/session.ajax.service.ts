@@ -7,7 +7,7 @@ import { UsuarioAjaxService } from './usuario.ajax.service';
 @Injectable()
 export class SessionAjaxService {
 
-  sUrl: string = "http://localhost:8085/session";
+  sUrl: string = "http://localhost:8083/session";
 
   subjectSession = new Subject<SessionEvent>();
 
