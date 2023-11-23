@@ -79,25 +79,25 @@ export class AdminProyectoFormUnroutedComponent implements OnInit {
           next: (data: IProyecto) => {
             this.oProyecto = data;
             this.initializeForm(this.oProyecto);
-            this.matSnackBar.open("Proyecto has been created.", '', { duration: 1200 });
+            this.oMatSnackBar.open("Proyecto has been created.", '', { duration: 1200 });
             this.router.navigate(['/admin', 'proyecto', 'view', data]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.matSnackBar.open("Can't create proyecto.", '', { duration: 1200 });
+            this.oMatSnackBar.open("Can't create proyecto.", '', { duration: 1200 });
           }
         });
       } else {
-        this.proyectoService.update(this.proyectoForm.value).subscribe({
+        this.oProyectoAjaxService.update(this.proyectoForm.value).subscribe({
           next: (data: IProyecto) => {
             this.oProyecto = data;
             this.initializeForm(this.oProyecto);
-            this.matSnackBar.open("proyecto has been updated.", '', { duration: 1200 });
+            this.oMatSnackBar.open("proyecto has been updated.", '', { duration: 1200 });
             this.router.navigate(['/admin', 'proyecto', 'view', this.oProyecto.id]);
           },
           error: (error: HttpErrorResponse) => {
             this.status = error;
-            this.matSnackBar.open("Can't update proyecto.", '', { duration: 1200 });
+            this.oMatSnackBar.open("Can't update proyecto.", '', { duration: 1200 });
           }
         });
       }
