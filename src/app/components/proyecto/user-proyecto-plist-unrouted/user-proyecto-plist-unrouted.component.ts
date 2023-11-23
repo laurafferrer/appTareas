@@ -98,9 +98,9 @@ export class UserProyectoPlistUnroutedComponent implements OnInit {
     })
   }
 
-  doShowTareas(oProducto: IProyecto) {
-    this.proyecto_selection.emit(oProducto);
-    this.activeProyecto = oProducto;
+  doShowTareas(oProyecto: IProyecto) {
+    this.proyecto_selection.emit(oProyecto);
+    this.activeProyecto = oProyecto;
     return false;
   }
 

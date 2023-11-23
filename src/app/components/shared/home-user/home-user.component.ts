@@ -25,11 +25,11 @@ export class HomeUserComponent implements OnInit {
   orderField: string = "id";
   orderDirection: string = "asc";
 
-  productosPorPagina: number = 10;
-  oPaginatorState = { first: 0, rows: this.productosPorPagina, page: 0, pageCount: 0 };
+  proyectosPorPagina: number = 10;
+  oPaginatorState = { first: 0, rows: this.proyectosPorPagina, page: 0, pageCount: 0 };
 
   status: HttpErrorResponse | null = null;
-  oProductoToRemove: IProyecto | null = null;
+  oProyectoToRemove: IProyecto | null = null;
   ref: DynamicDialogRef | undefined;
   strUserName: string = '';
   constructor(
@@ -60,7 +60,7 @@ export class HomeUserComponent implements OnInit {
   getPage(): void {
     this.oProyectoAjaxService
       .getPage(
-        this.productosPorPagina,
+        this.proyectosPorPagina,
         this.oPaginatorState.page,
         this.orderField,
         this.orderDirection,
@@ -79,7 +79,7 @@ export class HomeUserComponent implements OnInit {
   }
 
   onPageChange(event: PaginatorState) {
-    this.oPaginatorState.rows = this.productosPorPagina;
+    this.oPaginatorState.rows = this.proyectosPorPagina;
     this.getPage();
   }
 

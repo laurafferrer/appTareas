@@ -55,9 +55,8 @@ export class MenuUnroutedComponent implements OnInit {
           console.log(this.strUserName);
           this.oUsuarioAjaxService.getByUsername(this.oSessionService.getUsername()).subscribe({
            
-            next: (oUsuario: IUsuario) => {
-              this.oSessionUser = oUsuario;
-            
+            next: (oUser: IUsuario) => {
+              this.oSessionUser = oUser;
             },
             error: (error: HttpErrorResponse) => {
               console.log(error);

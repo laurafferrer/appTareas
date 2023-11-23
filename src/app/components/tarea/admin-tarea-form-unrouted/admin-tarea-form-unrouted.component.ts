@@ -58,7 +58,7 @@ export class AdminTareaFormUnroutedComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           this.status = error;
-          this.matSnackBar.open("Error reading Pedido from server.", '', { duration: 1200 });
+          this.matSnackBar.open("Error reading tarea from server.", '', { duration: 1200 });
         }
       });
     } else {

@@ -40,7 +40,7 @@ export class LoginRoutedComponent implements OnInit {
           this.oSessionService.setToken(data);
           this.oSessionService.emit({ type: 'login' });
           this.oMatSnackBar.open("Login successful.", '', { duration: 2000 });
-          if (this.loginForm.value.username === 'superuser') {
+          if (this.loginForm.value.username === 'Kirachan') {
             this.oRouter.navigate(['/home']); 
           } else {
             this.oRouter.navigate(['/userhome']); 

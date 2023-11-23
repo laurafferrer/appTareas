@@ -8,7 +8,7 @@
 
 <div *ngIf="status==null">
   <div class="d-flex justify-content-between mb-3">
-    <h3>Mostrando {{oPage?.numberOfElements}} de {{oPage?.totalElements}} productos.</h3>
+    <h3>Mostrando {{oPage?.numberOfElements}} de {{oPage?.totalElements}} proyectos.</h3>
   </div>
   <div class="flex justify-content-center mb-3">
     <p-paginator (onPageChange)="onPageChang($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
@@ -22,7 +22,7 @@
           <th (click)="doOrder('id')">ID</th>
           <th (click)="doOrder('nombre')">Nombre</th>
           <th (click)="doOrder('id_usuario')">Usuario</th>
-          <th>Productos</th>
+          <th>Proyectos</th>
           <th>Herramientas</th>
         </tr>
       </thead>

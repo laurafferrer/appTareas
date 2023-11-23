@@ -107,7 +107,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
     this.oConfirmationService.confirm({
       accept: () => {
         if (this.oTareaToRemove) {
-          this.oMatSnackBar.open('The producto has been removed.', '', {
+          this.oMatSnackBar.open('The proyecto has been removed.', '', {
             duration: 1200
           });
           this.oTareaAjaxService
@@ -119,7 +119,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
               error: (error: HttpErrorResponse) => {
                 this.status = error;
                 this.oMatSnackBar.open(
-                  "The producto hasn't been removed.",
+                  "The proyecto hasn't been removed.",
                   '',
                   { duration: 1200 }
                 );
@@ -129,7 +129,7 @@ export class AdminTareaPlistUnroutedComponent implements OnInit {
       },
       reject: (type: ConfirmEventType) => {
         this.oMatSnackBar.open(
-          "The producto hasn't been removed.",
+          "The proyecto hasn't been removed.",
           '',
           { duration: 1200 });
       }
