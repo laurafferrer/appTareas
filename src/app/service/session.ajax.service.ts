@@ -58,16 +58,17 @@ export class SessionAjaxService {
 
   getUsername(): string {
     if (this.isSessionActive()) {
-      let token: string | null = localStorage.getItem('token');
-      if (!token) {
-        return "";
-      } else {
-        return this.parseJwt(token).name;
-      }
+        let token: string | null = localStorage.getItem('token');
+        if (!token) {
+            return "";
+        } else {
+         
+            return this.parseJwt(token).name;
+        }
     } else {
-      return "";
+        return "";
     }
-  }
+}
 
   on(): Observable<SessionEvent> {
     return this.subjectSession.asObservable();
