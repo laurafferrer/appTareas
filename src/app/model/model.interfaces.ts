@@ -76,6 +76,7 @@ export interface SessionEvent {
 }
 
 export interface IToken {
+    nombre: string;
     jti: string;
     iss: string;
     iat: number;
